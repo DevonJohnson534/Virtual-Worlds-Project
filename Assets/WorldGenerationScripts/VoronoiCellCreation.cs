@@ -1,9 +1,10 @@
+using NUnit.Framework;
 using System.Drawing;
 using System.Linq;
 using UnityEngine;
-using static streets;
+using System.Collections.Generic;
 
-public class streets : MonoBehaviour
+public class VoronoiCellCreation : MonoBehaviour
 {
     public struct Line
     {
@@ -22,7 +23,7 @@ public class streets : MonoBehaviour
     }
 
 
-    Vector2[] centroids = new Vector2[30];
+    Vector2[] centroids = new Vector2[2];
     Cell limits = new Cell();
 
     float limit = 100;
@@ -46,28 +47,33 @@ public class streets : MonoBehaviour
 
 
         Cell[] cells = new Cell[centroids.Length];
-        
+
+        int completed = 0;
         foreach (Vector2 currentPoint in centroids)
         {
             GameObject structure = GameObject.CreatePrimitive(PrimitiveType.Cube);// make ovbious
             structure.transform.localScale = new Vector3(3, 20, 3);
             structure.transform.position = new Vector3(currentPoint.x, 10, currentPoint.y);
+            structure.name = "troid";
 
-            Cell cell = new Cell();
-            cell.boundaries = limits.boundaries.ToArray();
+
+            Cell cell = new Cell { boundaries = limits.boundaries };
 
             foreach (Vector2 point in centroids) {
                 if(point == currentPoint)
                 {
                     continue;
                 }
+                print(point);
 
                 Vector2 midpoint = (currentPoint + point) / 2;
                 Vector2 difference = currentPoint - point;     
                 Vector2 perpendicular = new Vector2(-difference.y, difference.x);
+                perpendicular.Normalize();
 
-                Vector2 bisectorPos = midpoint + ((limit + 1) * perpendicular);
-                Vector2 bisectorNeg = midpoint + (-(limit + 1) * perpendicular);
+                Vector2 bisectorPos = midpoint + (4 * limit * perpendicular);
+                Vector2 bisectorNeg = midpoint - (4 * limit * perpendicular);
+
 
                 Line bisector1 = new Line(midpoint, bisectorPos);
                 Line bisector2 = new Line(midpoint, bisectorNeg);
@@ -87,29 +93,37 @@ public class streets : MonoBehaviour
                     if (firstIntersection.HasValue)
                     {
                         fullBisector.start = (Vector2) firstIntersection;
+                        print("start: " + fullBisector.start);
                         split1 = i;
                     }
+
                     if (secondIntersection.HasValue)
                     {
-                        fullBisector.end = (Vector2) secondIntersection;
+                        fullBisector.end = (Vector2)secondIntersection;
+                        print("end "+ fullBisector.end);
                         split2 = i;
                     }
+
                 }
 
                 if (split1 != -1 && split2 != -1 && split1 != split2)
                 {
-                    Cell subCell = splitCell(fullBisector, cell, split1, split2);
-                    if(inCell(currentPoint, subCell))
+                    Cell subCell = new Cell { boundaries = splitCell(fullBisector, cell, split1, split2) };
+
+                    if (inCell(currentPoint, subCell))
                     {
-                        cell = subCell;
+                        cell.boundaries = subCell.boundaries;
                     }
                     else
                     {
-                        cell = splitCell(fullBisector, cell, split2, split1);
+                        cell.boundaries = splitCell(fullBisector, cell, split2, split1);
                     }
                 }
             }
+            cells[completed] = cell;
+            completed++;
         }
+        buildStreets(cells);
     }
 
     private void makePoints()
@@ -121,6 +135,29 @@ public class streets : MonoBehaviour
 
             centroids[i] = new Vector2(randX, randZ);
         }
+    }
+    
+
+    private void buildStreets(Cell[] cells)
+    {
+        foreach (Cell c in cells)
+        {
+            foreach (Line l in c.boundaries)
+            {
+                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Vector3 start = new Vector3(l.start.x, 3, l.start.y);
+                Vector3 end = new Vector3(l.end.x, 3, l.end.y);
+
+                Vector3 direction = end - start;
+                cube.transform.position = start + (direction / 2f);
+                cube.transform.localScale = new Vector3(2, 2, direction.magnitude);
+                if (direction != Vector3.zero)
+                {
+                    cube.transform.rotation = Quaternion.LookRotation(direction);
+                }
+            }
+        }
+
     }
 
 
@@ -157,10 +194,10 @@ public class streets : MonoBehaviour
     }
 
 
-    private Cell splitCell(Line bisection, Cell cell, int split1, int split2)
+    private Line[] splitCell(Line bisection, Cell cell, int split1, int split2)
     {
-        Line[] newCell = new Line[cell.boundaries.Length  + 2];
-        newCell[0] = bisection;
+        List<Line> newCell = new List<Line>();
+        newCell.Add(bisection);
 
         bool rightSplit = onLine(bisection.start, cell.boundaries[split1]); //determines counterclockwise vs clockwise cell relative to bisection start point.
         int startIndex = rightSplit ? split1 : split2;
@@ -169,20 +206,27 @@ public class streets : MonoBehaviour
         {
             if (i == split1)
             {
-                newCell[i - startIndex] = determineSplitLine(bisection, cell.boundaries[split1], rightSplit);
+                newCell.Add(determineSplitLine(bisection, cell.boundaries[split1], rightSplit));
+
             }
             else if (i == split2)
             {
-                print(split2 + " "+ newCell.Length);
-                newCell[i - startIndex] = determineSplitLine(bisection, cell.boundaries[split2], rightSplit);
+                newCell.Add(determineSplitLine(bisection, cell.boundaries[split2], rightSplit));
+
             }
             else
             {
-                newCell[i - startIndex] = cell.boundaries[i % cell.boundaries.Length];
+                newCell.Add(cell.boundaries[i % cell.boundaries.Length]);
             }
-        }
 
-        return new Cell {boundaries = newCell };
+
+        }
+        foreach (Line l in newCell)
+        {
+            print("segment: " + l.start + " " + l.end);
+        }
+        print("cell ^");
+        return newCell.ToArray();
     }
 
 
@@ -224,54 +268,48 @@ public class streets : MonoBehaviour
         return false;
     }
 
-    private Vector2? intersect(Line a, Line b) //from geeksforgeeks.org. Intersections but also avoiding diviision by zero
+    private Vector2? intersect(Line a, Line b)
     {
         float a1 = a.start.y - a.end.y;
         float b1 = a.end.x - a.start.x;
         float c1 = a1 * a.start.x + b1 * a.start.y;
+        //print(a1 + "x + " + b1 + "y = " + c1);
 
         float a2 = b.start.y - b.end.y;
         float b2 = b.end.x - b.start.x;
         float c2 = a2 * b.start.x + b2 * b.start.y;
+        //print(a2 + "x + " + b2 + "y = " + c2);
 
-        float det = a1 * b2 - a2 * b1;
+        float det = (a1 * b2) - (a2 * b1);
 
         if (det == 0)        
         {
             return null;
         }
 
-        float xNum = b2 * c1 - b1 * c2;
-        float yNum = a1 * c2 - a2 * c1;
-        Vector2 intersection = new Vector2(xNum, yNum);
+        float x = (b2 * c1 - b1 * c2) / det;
+        float y = (a1 * c2 - a2 * c1) / det;
+        Vector2 intersection = new Vector2(x, y);
 
-        // Make the denominator positive so that all comparisons use the same direction.
-        if (det < 0)
-        {
-            det = -det;
-            intersection.x = -xNum;
-            intersection.y = -yNum;
-        }
-
-        // Check whether the intersection point lies
-        // inside both line segments.
-        bool isInBounds = inBounds(intersection, a, det) && inBounds(intersection, b, det);
+        bool isInBounds = inBounds(intersection, a) && inBounds(intersection, b);
 
         if (isInBounds)
         {
-            return new Vector2(xNum, yNum);
+            return intersection;
         }
+
         return null;
     }
 
-    private bool inBounds(Vector2 point, Line line, float det)
+    private bool inBounds(Vector2 point, Line line)
     {
-        float minX1 = Mathf.Min(line.end.x, line.start.x) * det;
-        float minY1 = Mathf.Min(line.end.y, line.start.y) * det;
-        float maxX1 = Mathf.Max(line.end.x, line.start.x) * det;
-        float maxY1 = Mathf.Max(line.end.y, line.start.y) * det;
+        float error = 0.001f;
+        float minX = Mathf.Min(line.end.x, line.start.x) - error;
+        float maxX = Mathf.Max(line.end.x, line.start.x) + error;
+        float minY = Mathf.Min(line.end.y, line.start.y) - error;
+        float maxY = Mathf.Max(line.end.y, line.start.y) + error;
 
-        return point.x >= minX1 && point.x <= maxX1 && point.y >= minY1 && point.y <= maxY1;
+        return (point.x >= minX && point.x <= maxX) && (point.y >= minY && point.y <= maxY);
     }
 
 }
