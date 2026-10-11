@@ -254,30 +254,6 @@ public class VoronoiCellCreation : MonoBehaviour
     }
 
 
-    private Line determineSplitLine(Line bisector, Line split, bool rightSplit) // already assumed that these lines touch
-    {
-        bool splitStart = onLine(bisector.start, split);
-
-        if (rightSplit && splitStart)
-        {
-            return new Line(bisector.start, split.end);
-        }
-        else if (rightSplit && !splitStart)
-        {
-            return new Line(split.start, bisector.end);
-        }
-
-        else if (!rightSplit && splitStart)
-        {
-            return new Line(split.start, bisector.start);
-        }
-        else // (!rightSplit && !splitStart)
-        {
-            return new Line(bisector.start, split.start);
-        }
-    }
-
-
     private bool onLine(Vector2 point, Line line)
     {
         float a1 = line.start.y - line.end.y;
