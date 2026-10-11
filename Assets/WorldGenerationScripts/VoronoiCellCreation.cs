@@ -1,6 +1,3 @@
-using NUnit.Framework;
-using System.Drawing;
-using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -23,14 +20,18 @@ public class VoronoiCellCreation : MonoBehaviour
     }
 
 
-    Vector2[] centroids = new Vector2[2];
+    Vector2[] centroids = new Vector2[3];
     Cell limits = new Cell();
 
     float limit = 100;
 
     void Start()
     {
-        makePoints();
+        //makePoints();
+        centroids[0] = new Vector2(-70, -30);
+        centroids[1] = new Vector2(40, -40);
+        centroids[2] = new Vector2(-10, 90);
+
 
         limits.boundaries = new Line[4];// no voroni outside this space. a square for now
         Vector2 corner1 = new Vector2(-limit, -limit); //turn into a fucniton later probably.
@@ -51,12 +52,6 @@ public class VoronoiCellCreation : MonoBehaviour
         int completed = 0;
         foreach (Vector2 currentPoint in centroids)
         {
-            GameObject structure = GameObject.CreatePrimitive(PrimitiveType.Cube);// make ovbious
-            structure.transform.localScale = new Vector3(3, 20, 3);
-            structure.transform.position = new Vector3(currentPoint.x, 10, currentPoint.y);
-            structure.name = "troid";
-
-
             Cell cell = new Cell { boundaries = limits.boundaries };
 
             foreach (Vector2 point in centroids) {
@@ -64,7 +59,7 @@ public class VoronoiCellCreation : MonoBehaviour
                 {
                     continue;
                 }
-                print(point);
+                print("comparing " + currentPoint + " with " + point);
 
                 Vector2 midpoint = (currentPoint + point) / 2;
                 Vector2 difference = currentPoint - point;     
@@ -93,14 +88,12 @@ public class VoronoiCellCreation : MonoBehaviour
                     if (firstIntersection.HasValue)
                     {
                         fullBisector.start = (Vector2) firstIntersection;
-                        print("start: " + fullBisector.start);
                         split1 = i;
                     }
 
                     if (secondIntersection.HasValue)
                     {
                         fullBisector.end = (Vector2)secondIntersection;
-                        print("end "+ fullBisector.end);
                         split2 = i;
                     }
 
@@ -108,7 +101,7 @@ public class VoronoiCellCreation : MonoBehaviour
 
                 if (split1 != -1 && split2 != -1 && split1 != split2)
                 {
-                    Cell subCell = new Cell { boundaries = splitCell(fullBisector, cell, split1, split2) };
+                    Cell subCell = new Cell { boundaries = splitCell(fullBisector, cell, split1, split2, true) };
 
                     if (inCell(currentPoint, subCell))
                     {
@@ -116,10 +109,15 @@ public class VoronoiCellCreation : MonoBehaviour
                     }
                     else
                     {
-                        cell.boundaries = splitCell(fullBisector, cell, split2, split1);
+                        cell.boundaries = splitCell(fullBisector, cell, split1, split2, false);
+                    }
+                    foreach (Line l in cell.boundaries)
+                    {
+                        print("segment: " + l.start + " " + l.end);
                     }
                 }
             }
+            cell.centroid = currentPoint;
             cells[completed] = cell;
             completed++;
         }
@@ -140,8 +138,32 @@ public class VoronoiCellCreation : MonoBehaviour
 
     private void buildStreets(Cell[] cells)
     {
+        Color r = Color.red;
+        Color g = Color.green;
+        Color b = Color.blue;
+
+        Color[] colors = new Color[3];
+        colors[0] = r;
+        colors[1] = g;
+        colors[2] = b;
+
+        int count = 0;
+
         foreach (Cell c in cells)
-        {
+        {               
+            GameObject structure = GameObject.CreatePrimitive(PrimitiveType.Cube);// make ovbious
+            structure.transform.localScale = new Vector3(3, 20, 3);
+            structure.transform.position = new Vector3(c.centroid.x, 10, c.centroid.y);
+            structure.name = "troid"; 
+            
+            Renderer objRenderer = structure.GetComponent<Renderer>();
+
+            if (objRenderer != null)
+            {
+                objRenderer.material.color = colors[count];
+
+            }
+
             foreach (Line l in c.boundaries)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -155,7 +177,16 @@ public class VoronoiCellCreation : MonoBehaviour
                 {
                     cube.transform.rotation = Quaternion.LookRotation(direction);
                 }
+                Renderer o = cube.GetComponent<Renderer>();
+
+                if (o != null)
+                {
+                    o.material.color = colors[count];
+
+                }
+
             }
+            count++;
         }
 
     }
@@ -194,38 +225,31 @@ public class VoronoiCellCreation : MonoBehaviour
     }
 
 
-    private Line[] splitCell(Line bisection, Cell cell, int split1, int split2)
+    private Line[] splitCell(Line bisection, Cell cell, int split1, int split2, bool rightSplit)
     {
         List<Line> newCell = new List<Line>();
-        newCell.Add(bisection);
+        if (rightSplit)
+        {
+            newCell.Add(new Line(cell.boundaries[split2].start, bisection.end));
+            newCell.Add(bisection);
+            newCell.Add(new Line(bisection.start, cell.boundaries[split1].end));
+        }
+        else
+        {
+            newCell.Add(new Line(cell.boundaries[split2].start, bisection.end));
+            newCell.Add(bisection);
+            newCell.Add(new Line(bisection.start, cell.boundaries[split1].end));
+        }
 
-        bool rightSplit = onLine(bisection.start, cell.boundaries[split1]); //determines counterclockwise vs clockwise cell relative to bisection start point.
         int startIndex = rightSplit ? split1 : split2;
+        int endIndex = rightSplit ? split2 : split1;
+        startIndex = (startIndex + 1) % cell.boundaries.Length;
 
-        for (int i = startIndex; i < cell.boundaries.Length + startIndex; i++)
+        for (int i = startIndex; i % cell.boundaries.Length != endIndex; i++)
         {
-            if (i == split1)
-            {
-                newCell.Add(determineSplitLine(bisection, cell.boundaries[split1], rightSplit));
-
-            }
-            else if (i == split2)
-            {
-                newCell.Add(determineSplitLine(bisection, cell.boundaries[split2], rightSplit));
-
-            }
-            else
-            {
-                newCell.Add(cell.boundaries[i % cell.boundaries.Length]);
-            }
-
-
+            newCell.Add(cell.boundaries[i % cell.boundaries.Length]);
         }
-        foreach (Line l in newCell)
-        {
-            print("segment: " + l.start + " " + l.end);
-        }
-        print("cell ^");
+
         return newCell.ToArray();
     }
 
@@ -249,7 +273,7 @@ public class VoronoiCellCreation : MonoBehaviour
         }
         else // (!rightSplit && !splitStart)
         {
-            return new Line(bisector.end, split.end);
+            return new Line(bisector.start, split.start);
         }
     }
 
@@ -260,7 +284,7 @@ public class VoronoiCellCreation : MonoBehaviour
         float b1 = line.end.x - line.start.x;
         float c1 = a1 * line.start.x + b1 * line.start.y;
 
-        if(c1 == a1 * point.x + b1 * point.y)
+        if(c1 - (a1 * point.x + b1 * point.y) <= 0.001)
         {
             return true;
         }
