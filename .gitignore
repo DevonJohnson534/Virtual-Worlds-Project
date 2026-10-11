@@ -112,3 +112,17 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+Assets/FreeFlyCamera/Documentation/FreeFlyCamera_en.pdf
+Assets/FreeFlyCamera/Documentation/FreeFlyCamera_en.pdf.meta
+Assets/FreeFlyCamera/Documentation/FreeFlyCamera_ru.pdf
+Assets/FreeFlyCamera/Documentation/FreeFlyCamera_ru.pdf.meta
+Assets/FreeFlyCamera/readme.txt
+Assets/FreeFlyCamera/readme.txt.meta
+Assets/FreeFlyCamera/Scripts.meta
+Assets/FreeFlyCamera/Scripts/FreeFlyCamera.cs
+Assets/FreeFlyCamera/Scripts/FreeFlyCamera.cs.meta
+Assets/whsat.unity
+Assets/whsat.unity.meta
+ProjectSettings/URPProjectSettings.asset
+ProjectSettings/URPProjectSettings.asset
+ProjectSettings/URPProjectSettings.asset
