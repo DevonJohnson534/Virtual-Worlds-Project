@@ -28,9 +28,9 @@ public class VoronoiCellCreation : MonoBehaviour
     void Start()
     {
         //makePoints();
-        centroids[0] = new Vector2(-70, -30);
-        centroids[1] = new Vector2(40, -40);
-        centroids[2] = new Vector2(-10, 90);
+        centroids[0] = new Vector2(5.98f, 27.140f);
+        centroids[1] = new Vector2(52.86f, 54.07f);
+        centroids[2] = new Vector2(89.19f, 26.77f);
 
 
         limits.boundaries = new Line[4];// no voroni outside this space. a square for now
@@ -138,24 +138,20 @@ public class VoronoiCellCreation : MonoBehaviour
 
     private void buildStreets(Cell[] cells)
     {
-        Color r = Color.red;
-        Color g = Color.green;
-        Color b = Color.blue;
-
         Color[] colors = new Color[3];
-        colors[0] = r;
-        colors[1] = g;
-        colors[2] = b;
-
+        colors[0] = Color.red;
+        colors[1] = Color.green;
+        colors[2] = Color.blue;
         int count = 0;
 
         foreach (Cell c in cells)
         {               
             GameObject structure = GameObject.CreatePrimitive(PrimitiveType.Cube);// make ovbious
-            structure.transform.localScale = new Vector3(3, 20, 3);
-            structure.transform.position = new Vector3(c.centroid.x, 10, c.centroid.y);
+            structure.transform.localScale = new Vector3(2, 1, 2);
+            structure.transform.position = new Vector3(c.centroid.x, 1, c.centroid.y);
             structure.name = "troid"; 
             
+            Color color = Random.ColorHSV(); 
             Renderer objRenderer = structure.GetComponent<Renderer>();
 
             if (objRenderer != null)
@@ -231,13 +227,13 @@ public class VoronoiCellCreation : MonoBehaviour
         if (rightSplit)
         {
             newCell.Add(new Line(cell.boundaries[split2].start, bisection.end));
-            newCell.Add(bisection);
+            newCell.Add(flipIfNeeded(newCell[newCell.Count - 1], bisection));
             newCell.Add(new Line(bisection.start, cell.boundaries[split1].end));
         }
         else
         {
             newCell.Add(new Line(cell.boundaries[split2].start, bisection.end));
-            newCell.Add(bisection);
+            newCell.Add(flipIfNeeded(newCell[newCell.Count - 1], bisection));
             newCell.Add(new Line(bisection.start, cell.boundaries[split1].end));
         }
 
@@ -253,6 +249,16 @@ public class VoronoiCellCreation : MonoBehaviour
         return newCell.ToArray();
     }
 
+
+    private Line flipIfNeeded(Line a, Line b)
+    {
+        if(a.end == b.start)
+        {
+            return b;
+        }
+    
+        return new Line(b.end, b.start);
+    }
 
     private bool onLine(Vector2 point, Line line)
     {
