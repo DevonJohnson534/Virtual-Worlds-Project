@@ -1,14 +1,16 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Cell : MonoBehaviour
+namespace BuildingGen
 {
-   public bool collapsed;
-	[System.NonSerialized] public List<Tile> possibleTiles;
-
-   public void InitCell(bool isCollapsed, List<Tile> tileSet)
+   public class Cell
    {
-      collapsed = isCollapsed;
-      possibleTiles = new List<Tile>(tileSet); //shallow copy
-	}
+      public bool collapsed;
+      public List<Tile> possibleTiles;
+
+      public void InitCell(bool isCollapsed, List<Tile> tileSet)
+      {
+         collapsed = isCollapsed;
+         possibleTiles = new List<Tile>(tileSet); //shallow copy
+      }
+   }
 }
