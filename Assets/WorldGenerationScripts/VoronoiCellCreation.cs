@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class VoronoiCellCreation : MonoBehaviour
 {
     public struct Line
     {
-        public Vector2 start;//calculating lines no slope formula 2 avoid division by 0, which is high chance
+        public Vector2 start;
         public Vector2 end;
         public Line(Vector2 p1, Vector2 p2)
         {
@@ -16,11 +17,11 @@ public class VoronoiCellCreation : MonoBehaviour
     public struct Cell
     {
         public Vector2 centroid;
-        public Line[] boundaries;//using arrays instead of lists because im stupid and forgor and dont know what c# is
+        public Line[] boundaries;
     }
 
 
-    Vector2[] centroids = new Vector2[3];
+    Vector2[] centroids = new Vector2[2];
     Cell limits = new Cell();
 
     float limit = 100;
@@ -28,9 +29,11 @@ public class VoronoiCellCreation : MonoBehaviour
     void Start()
     {
         //makePoints();
-        centroids[0] = new Vector2(5.98f, 27.140f);
-        centroids[1] = new Vector2(52.86f, 54.07f);
-        centroids[2] = new Vector2(89.19f, 26.77f);
+        centroids[0] = new Vector2(-93.87712f, 42.48099f);
+        centroids[1] = new Vector2(-22.30507f, 53.53791f);
+        //centroids[0] = new Vector2(4.292381f, 52.5742f);
+        //centroids[1] = new Vector2(3.262054f, 8.824905f);
+        //centroids[2] = new Vector2(31.63235f, -9.683861f);
 
 
         limits.boundaries = new Line[4];// no voroni outside this space. a square for now
@@ -46,7 +49,6 @@ public class VoronoiCellCreation : MonoBehaviour
         limits.centroid = new Vector2(0, 0); //does not have to be 0,0. can be centered elsewhere.
 
 
-
         Cell[] cells = new Cell[centroids.Length];
 
         int completed = 0;
@@ -59,7 +61,6 @@ public class VoronoiCellCreation : MonoBehaviour
                 {
                     continue;
                 }
-                print("comparing " + currentPoint + " with " + point);
 
                 Vector2 midpoint = (currentPoint + point) / 2;
                 Vector2 difference = currentPoint - point;     
@@ -69,39 +70,38 @@ public class VoronoiCellCreation : MonoBehaviour
                 Vector2 bisectorPos = midpoint + (4 * limit * perpendicular);
                 Vector2 bisectorNeg = midpoint - (4 * limit * perpendicular);
 
+                Line bisector = new Line(bisectorPos, bisectorNeg);
 
-                Line bisector1 = new Line(midpoint, bisectorPos);
-                Line bisector2 = new Line(midpoint, bisectorNeg);
-
-                Line fullBisector = new Line();
-                int split1 = -1;
-                int split2 = -1;
-
-                Vector2? intersection1 = null, intersection2 = null;
+                List<Vector2> bisectorIntersections = new List<Vector2>(2);
+                List<int >intersectedIndicies = new List<int>(2);
 
                 for (int i = 0; i < cell.boundaries.Length; i++)
                 {
                     Line cellBoundary = cell.boundaries[i];
-                    Vector2? firstIntersection = intersect(bisector1, cellBoundary);
-                    Vector2? secondIntersection = intersect(bisector2, cellBoundary);
+                    Vector2? firstIntersection = intersect(bisector, cellBoundary);
+                    Vector2? secondIntersection = intersect(bisector, cellBoundary);
 
                     if (firstIntersection.HasValue)
                     {
-                        fullBisector.start = (Vector2) firstIntersection;
-                        split1 = i;
+                        bisectorIntersections.Insert(0, (Vector2)firstIntersection);
+                        intersectedIndicies.Insert(0, i);
                     }
 
                     if (secondIntersection.HasValue)
                     {
-                        fullBisector.end = (Vector2)secondIntersection;
-                        split2 = i;
+                        bisectorIntersections.Add((Vector2)secondIntersection);
+                        intersectedIndicies.Add(i);
                     }
-
                 }
 
-                if (split1 != -1 && split2 != -1 && split1 != split2)
-                {
-                    Cell subCell = new Cell { boundaries = splitCell(fullBisector, cell, split1, split2, true) };
+                bisectorIntersections = bisectorIntersections.Distinct().ToList();
+
+                if(bisectorIntersections.Count == 2) {
+                    Line newSegment = new Line(bisectorIntersections[0], bisectorIntersections[1]);
+
+                    int split1 = intersectedIndicies[0];
+                    int split2 = intersectedIndicies[1];
+                    Cell subCell = new Cell { boundaries = splitCell(newSegment, cell, split1, split2, true) };
 
                     if (inCell(currentPoint, subCell))
                     {
@@ -109,12 +109,9 @@ public class VoronoiCellCreation : MonoBehaviour
                     }
                     else
                     {
-                        cell.boundaries = splitCell(fullBisector, cell, split1, split2, false);
+                        cell.boundaries = splitCell(newSegment, cell, split1, split2, false);
                     }
-                    foreach (Line l in cell.boundaries)
-                    {
-                        print("segment: " + l.start + " " + l.end);
-                    }
+
                 }
             }
             cell.centroid = currentPoint;
@@ -149,17 +146,17 @@ public class VoronoiCellCreation : MonoBehaviour
             GameObject structure = GameObject.CreatePrimitive(PrimitiveType.Cube);// make ovbious
             structure.transform.localScale = new Vector3(2, 1, 2);
             structure.transform.position = new Vector3(c.centroid.x, 1, c.centroid.y);
-            structure.name = "troid"; 
+            structure.name = "troid" + count; 
             
             Color color = Random.ColorHSV(); 
             Renderer objRenderer = structure.GetComponent<Renderer>();
 
             if (objRenderer != null)
             {
-                objRenderer.material.color = colors[count];
+                objRenderer.material.color = colors[count % 3];
 
             }
-
+            int wallcount = 0;
             foreach (Line l in c.boundaries)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -169,6 +166,8 @@ public class VoronoiCellCreation : MonoBehaviour
                 Vector3 direction = end - start;
                 cube.transform.position = start + (direction / 2f);
                 cube.transform.localScale = new Vector3(2, 2, direction.magnitude);
+                cube.name = "wall" + wallcount + "of cell " + count;
+
                 if (direction != Vector3.zero)
                 {
                     cube.transform.rotation = Quaternion.LookRotation(direction);
@@ -177,10 +176,10 @@ public class VoronoiCellCreation : MonoBehaviour
 
                 if (o != null)
                 {
-                    o.material.color = colors[count];
+                    o.material.color = colors[count % 3];
 
                 }
-
+                wallcount ++;
             }
             count++;
         }
@@ -190,7 +189,11 @@ public class VoronoiCellCreation : MonoBehaviour
 
     private bool inCell(Vector2 point, Cell cell)
     {
-        
+        foreach (Line l in cell.boundaries)
+        {
+            print(l.start + " " + l.end);
+        }
+
         Vector2 mid = (cell.boundaries[0].start + cell.boundaries[0].start) / 2;
         Vector2 direction = point - mid;
         Vector2 farEnd = point + limit * direction;
@@ -266,7 +269,7 @@ public class VoronoiCellCreation : MonoBehaviour
         float b1 = line.end.x - line.start.x;
         float c1 = a1 * line.start.x + b1 * line.start.y;
 
-        if(c1 - (a1 * point.x + b1 * point.y) <= 0.001)
+        if(Mathf.Abs(c1) - Mathf.Abs(a1 * point.x + b1 * point.y) <= 0.001)
         {
             return true;
         }
@@ -303,7 +306,6 @@ public class VoronoiCellCreation : MonoBehaviour
         {
             return intersection;
         }
-
         return null;
     }
 
