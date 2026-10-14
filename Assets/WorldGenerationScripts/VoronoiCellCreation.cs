@@ -21,7 +21,7 @@ public class VoronoiCellCreation : MonoBehaviour
     }
 
 
-    Vector2[] centroids = new Vector2[100];
+    Vector2[] centroids = new Vector2[150];
     Cell limits = new Cell();
 
     float limit = 300;
