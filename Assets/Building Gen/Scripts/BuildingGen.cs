@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace BuildingGen
 {
+	[RequireComponent(typeof(NavMeshSurface))]
 	public class BuildingGenerator : MonoBehaviour
 	{
 		public Vector3Int dimensions;
@@ -28,6 +31,7 @@ namespace BuildingGen
 				{
 					generating = false;
 					Cleanup();
+					GetComponent<NavMeshSurface>().BuildNavMesh(); //TODO coroutine? also, should this be per building or what
 					Debug.Log("Generation complete");
 				}
 				else

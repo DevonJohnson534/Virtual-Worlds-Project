@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1064293165804504076}
   - component: {fileID: 1010665407276154766}
   - component: {fileID: -7488395375057882359}
+  - component: {fileID: -6649083195352817967}
   m_Layer: 0
   m_Name: Magic Tile
   m_TagString: Untagged
@@ -109,3 +110,25 @@ MonoBehaviour:
   zMinusEdge: -1
   xPlusEdge: -1
   xMinusEdge: -1
+--- !u!64 &-6649083195352817967
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077069230133962231}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
