@@ -21,16 +21,16 @@ public class VoronoiCellCreation : MonoBehaviour
     }
 
 
-    Vector2[] centroids = new Vector2[2];
+    Vector2[] centroids = new Vector2[100];
     Cell limits = new Cell();
 
-    float limit = 100;
+    float limit = 300;
 
     void Start()
     {
-        //makePoints();
-        centroids[0] = new Vector2(-93.87712f, 42.48099f);
-        centroids[1] = new Vector2(-22.30507f, 53.53791f);
+        makePoints();
+        //centroids[0] = new Vector2(-93.87712f, 42.48099f);
+        //centroids[1] = new Vector2(-22.30507f, 53.53791f);
         //centroids[0] = new Vector2(4.292381f, 52.5742f);
         //centroids[1] = new Vector2(3.262054f, 8.824905f);
         //centroids[2] = new Vector2(31.63235f, -9.683861f);
@@ -111,6 +111,12 @@ public class VoronoiCellCreation : MonoBehaviour
                     {
                         cell.boundaries = splitCell(newSegment, cell, split1, split2, false);
                     }
+                    print(currentPoint);
+                    foreach (Line l in cell.boundaries)
+                    {
+                        print(l.start + " " + l.end);
+                    }
+
 
                 }
             }
@@ -153,7 +159,7 @@ public class VoronoiCellCreation : MonoBehaviour
 
             if (objRenderer != null)
             {
-                objRenderer.material.color = colors[count % 3];
+                objRenderer.material.color = color;
 
             }
             int wallcount = 0;
@@ -176,7 +182,7 @@ public class VoronoiCellCreation : MonoBehaviour
 
                 if (o != null)
                 {
-                    o.material.color = colors[count % 3];
+                    o.material.color = color;
 
                 }
                 wallcount ++;
@@ -189,11 +195,6 @@ public class VoronoiCellCreation : MonoBehaviour
 
     private bool inCell(Vector2 point, Cell cell)
     {
-        foreach (Line l in cell.boundaries)
-        {
-            print(l.start + " " + l.end);
-        }
-
         Vector2 mid = (cell.boundaries[0].start + cell.boundaries[0].start) / 2;
         Vector2 direction = point - mid;
         Vector2 farEnd = point + limit * direction;
@@ -235,9 +236,9 @@ public class VoronoiCellCreation : MonoBehaviour
         }
         else
         {
-            newCell.Add(new Line(cell.boundaries[split2].start, bisection.end));
+            newCell.Add(new Line(cell.boundaries[split1].start, bisection.start));
             newCell.Add(flipIfNeeded(newCell[newCell.Count - 1], bisection));
-            newCell.Add(new Line(bisection.start, cell.boundaries[split1].end));
+            newCell.Add(new Line(bisection.end, cell.boundaries[split2].end));
         }
 
         int startIndex = rightSplit ? split1 : split2;
@@ -269,7 +270,7 @@ public class VoronoiCellCreation : MonoBehaviour
         float b1 = line.end.x - line.start.x;
         float c1 = a1 * line.start.x + b1 * line.start.y;
 
-        if(Mathf.Abs(c1) - Mathf.Abs(a1 * point.x + b1 * point.y) <= 0.001)
+        if(Mathf.Abs(Mathf.Abs(c1) - Mathf.Abs(a1 * point.x + b1 * point.y)) <= 0.001)
         {
             return true;
         }
