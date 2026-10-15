@@ -114,3 +114,6 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ss]ceneDependencyCache*
 
 /[Uu]pgrade[Ll]og*.htm
+
+.vscode/
+
