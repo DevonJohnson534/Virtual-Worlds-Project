@@ -29,12 +29,6 @@ public class VoronoiCellCreation : MonoBehaviour
     void Start()
     {
         makePoints();
-        //centroids[0] = new Vector2(-93.87712f, 42.48099f);
-        //centroids[1] = new Vector2(-22.30507f, 53.53791f);
-        //centroids[0] = new Vector2(4.292381f, 52.5742f);
-        //centroids[1] = new Vector2(3.262054f, 8.824905f);
-        //centroids[2] = new Vector2(31.63235f, -9.683861f);
-
 
         limits.boundaries = new Line[4];// no voroni outside this space. a square for now
         Vector2 corner1 = new Vector2(-limit, -limit); //turn into a fucniton later probably.
@@ -47,7 +41,6 @@ public class VoronoiCellCreation : MonoBehaviour
         limits.boundaries[2] = new Line(corner3, corner4);
         limits.boundaries[3] = new Line(corner4, corner1);
         limits.centroid = new Vector2(0, 0); //does not have to be 0,0. can be centered elsewhere.
-
 
         Cell[] cells = new Cell[centroids.Length];
 
@@ -127,6 +120,7 @@ public class VoronoiCellCreation : MonoBehaviour
         buildStreets(cells);
     }
 
+
     private void makePoints()
     {
         for (int i = 0; i < centroids.Length; i++)
@@ -137,6 +131,7 @@ public class VoronoiCellCreation : MonoBehaviour
             centroids[i] = new Vector2(randX, randZ);
         }
     }
+
     
 
     private void buildStreets(Cell[] cells)
@@ -264,6 +259,8 @@ public class VoronoiCellCreation : MonoBehaviour
         return new Line(b.end, b.start);
     }
 
+
+
     private bool onLine(Vector2 point, Line line)
     {
         float a1 = line.start.y - line.end.y;
@@ -278,17 +275,16 @@ public class VoronoiCellCreation : MonoBehaviour
         return false;
     }
 
+
     private Vector2? intersect(Line a, Line b)
     {
         float a1 = a.start.y - a.end.y;
         float b1 = a.end.x - a.start.x;
         float c1 = a1 * a.start.x + b1 * a.start.y;
-        //print(a1 + "x + " + b1 + "y = " + c1);
 
         float a2 = b.start.y - b.end.y;
         float b2 = b.end.x - b.start.x;
         float c2 = a2 * b.start.x + b2 * b.start.y;
-        //print(a2 + "x + " + b2 + "y = " + c2);
 
         float det = (a1 * b2) - (a2 * b1);
 
@@ -309,6 +305,7 @@ public class VoronoiCellCreation : MonoBehaviour
         }
         return null;
     }
+
 
     private bool inBounds(Vector2 point, Line line)
     {
