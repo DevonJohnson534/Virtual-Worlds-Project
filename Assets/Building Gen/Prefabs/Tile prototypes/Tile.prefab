@@ -103,9 +103,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
-  yPlusEdges: []
-  yMinusEdges: []
-  zPlusEdges: []
-  zMinusEdges: []
-  xPlusEdges: []
-  xMinusEdges: []
+  yPlusEdge: 0
+  yMinusEdge: 0
+  zPlusEdge: 0
+  zMinusEdge: 0
+  xPlusEdge: 0
+  xMinusEdge: 0
