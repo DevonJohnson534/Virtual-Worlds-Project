@@ -1854,6 +1854,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 358029804136041090, guid: c7fd8c9015c8eb442a9ea3002fdf7c05, type: 3}
+      propertyPath: m_LinearDamping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 358029804136041090, guid: c7fd8c9015c8eb442a9ea3002fdf7c05, type: 3}
+      propertyPath: m_AngularDamping
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4931152316519065281, guid: c7fd8c9015c8eb442a9ea3002fdf7c05, type: 3}
       propertyPath: m_Name
       value: Character
