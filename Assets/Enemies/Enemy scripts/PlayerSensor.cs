@@ -9,7 +9,7 @@ public class PlayerSensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out Player player))
+        if(other.TryGetComponent(out PlayerController player))
         {
             onPlayerEnter?.Invoke(player.transform);
         }
@@ -17,7 +17,7 @@ public class PlayerSensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.TryGetComponent(out Player player))
+        if(other.TryGetComponent(out PlayerController player))
         {
             onPlayerExit?.Invoke(other.transform.position);
         }

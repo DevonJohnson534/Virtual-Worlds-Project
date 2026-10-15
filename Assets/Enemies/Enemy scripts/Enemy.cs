@@ -10,7 +10,7 @@ namespace VirtualWorlds.FSM
     {
         [Header("References")]
         [SerializeField]
-        private Player player;
+        private PlayerController player;
 
         [Header("Sensors")]
         [SerializeField]
@@ -24,6 +24,8 @@ namespace VirtualWorlds.FSM
         [SerializeField]
         [Range(0.2f, 5f)]
         private float AttackCooldown = 1;
+        [SerializeField]
+        private DamageConfigScriptableObject damageConfig;
 
 
         [Space]
@@ -105,15 +107,12 @@ namespace VirtualWorlds.FSM
             lastAttackTime = Time.time;
             // We don't want the hitbox to just go off over and over.
             // so we tell it to go to sleep. Then, wake it up
-            // next time we attack.
-            Rigidbody rb = collision.collider.GetComponent<Rigidbody>();
-            if (rb != null)
+            // next time we attack
+            if (collision.collider.TryGetComponent(out Damageable damageable))
             {
-                Vector3 incomingDirection = rb.linearVelocity.normalized;
-                Vector3 oppositeDirection = -incomingDirection;
-                rb.AddForce(oppositeDirection * 500, ForceMode.Impulse);
+                damageable.TakeDamage(damageConfig.GetDamage(5));
             }
-                spearImpactSensor.gameObject.SetActive(false);
+            spearImpactSensor.gameObject.SetActive(false);
         }
 
 
