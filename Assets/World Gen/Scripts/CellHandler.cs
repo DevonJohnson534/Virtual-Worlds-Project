@@ -4,9 +4,9 @@ using Voronoi;
 
 public class CellHandler : MonoBehaviour
 {
-    public float boundDistance = 10;
+    public float boundDistance = 100;
     public int numberOfCells = 3;
-    public float minDistance = 2;
+    public float minDistance = 10;
 
     public Cell[] cells;
     void Awake()
