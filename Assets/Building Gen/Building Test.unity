@@ -308,6 +308,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pipes structure
       objectReference: {fileID: 0}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: magicTilePrototype
+      value: 
+      objectReference: {fileID: 897309065854651706, guid: e28a15960b4cfcc4ebbd367af567bd7f, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: tilePrototypes.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4322402480874615888, guid: 6d79e6db3a92ed54c862f75db23466cf, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 9154739559928833874, guid: 77ab8f20c77d3b64683f9ade45356215, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 9154739559928833874, guid: 77ab8f20c77d3b64683f9ade45356215, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2073468563343979012, guid: 58cc25a59dc213c46b44c75cb3277e58, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[4]'
+      value: 
+      objectReference: {fileID: -684489211086423417, guid: 7e72d972e8d71a24ab06e74a2a0a5c00, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[5]'
+      value: 
+      objectReference: {fileID: 3579652764894404190, guid: 5334ba92f10d48e4586acdd0c755bb7d, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[6]'
+      value: 
+      objectReference: {fileID: -6419522163713494681, guid: 5de098bcf6485e94e99497dd5632222c, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[7]'
+      value: 
+      objectReference: {fileID: 5265534981048743192, guid: 2c7b5c1673205d14688160877315c70a, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[8]'
+      value: 
+      objectReference: {fileID: 7887318597979262104, guid: 8f5cac49d0b8298418a4a26b62658287, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[9]'
+      value: 
+      objectReference: {fileID: 7887318597979262104, guid: 8f5cac49d0b8298418a4a26b62658287, type: 3}
+    - target: {fileID: 8746021052707402404, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[10]'
+      value: 
+      objectReference: {fileID: 2293330809889163253, guid: 4183c1dfd69eb9241a3ea674c51f621e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -492,6 +544,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stairs world
       objectReference: {fileID: 0}
+    - target: {fileID: 8681761710089545867, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
+      propertyPath: magicTilePrototype
+      value: 
+      objectReference: {fileID: 897309065854651706, guid: e28a15960b4cfcc4ebbd367af567bd7f, type: 3}
+    - target: {fileID: 8681761710089545867, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7887318597979262104, guid: 8f5cac49d0b8298418a4a26b62658287, type: 3}
+    - target: {fileID: 8681761710089545867, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[1]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: 7da6a617ff55dad439d9c0d5328294dd, type: 3}
+    - target: {fileID: 8681761710089545867, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[2]'
+      value: 
+      objectReference: {fileID: -6778582060028963360, guid: b6d8d85de329afc4aa2e18268b896f9f, type: 3}
+    - target: {fileID: 8681761710089545867, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2293330809889163253, guid: 4183c1dfd69eb9241a3ea674c51f621e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

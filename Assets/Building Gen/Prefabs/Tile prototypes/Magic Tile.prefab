@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 6881693138722090964}
   - component: {fileID: 1064293165804504076}
   - component: {fileID: 1010665407276154766}
-  - component: {fileID: -7488395375057882359}
-  - component: {fileID: -6649083195352817967}
   - component: {fileID: -4387022703925268253}
+  - component: {fileID: 897309065854651706}
   m_Layer: 0
   m_Name: Magic Tile
   m_TagString: Untagged
@@ -93,46 +92,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-7488395375057882359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6077069230133962231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  yPlusEdge: -1
-  yMinusEdge: -1
-  zPlusEdge: -1
-  zMinusEdge: -1
-  xPlusEdge: -1
-  xMinusEdge: -1
---- !u!64 &-6649083195352817967
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6077069230133962231}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!135 &-4387022703925268253
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -154,3 +113,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &897309065854651706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077069230133962231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
+  yPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  yMinusEdge:
+    edgeName: 0
+    symmetric: 0
+  zPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  zMinusEdge:
+    edgeName: 0
+    symmetric: 0
+  xPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  xMinusEdge:
+    edgeName: 0
+    symmetric: 0

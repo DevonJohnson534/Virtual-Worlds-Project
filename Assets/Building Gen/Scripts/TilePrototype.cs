@@ -4,13 +4,13 @@ namespace BuildingGen
 {
 	public class TilePrototype : MonoBehaviour
 	{
-		public int yPlusEdge;
-		public int yMinusEdge;
+		public VertEdge yPlusEdge;
+		public VertEdge yMinusEdge;
 
-		public int zPlusEdge;
-		public int zMinusEdge;
+		public HorzEdge zPlusEdge;
+		public HorzEdge zMinusEdge;
 
-		public int xPlusEdge;
-		public int xMinusEdge;
+		public HorzEdge xPlusEdge;
+		public HorzEdge xMinusEdge;
 	}
 }

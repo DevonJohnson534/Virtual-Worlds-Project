@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6881693138722090964}
   - component: {fileID: 1064293165804504076}
   - component: {fileID: 1010665407276154766}
-  - component: {fileID: -7488395375057882359}
+  - component: {fileID: -2007500165634898679}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -91,7 +91,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-7488395375057882359
+--- !u!114 &-2007500165634898679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,10 +102,22 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
-  yPlusEdge: 0
-  yMinusEdge: 0
-  zPlusEdge: 0
-  zMinusEdge: 0
-  xPlusEdge: 0
-  xMinusEdge: 0
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
+  yPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  yMinusEdge:
+    edgeName: 0
+    symmetric: 0
+  zPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  zMinusEdge:
+    edgeName: 0
+    symmetric: 0
+  xPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  xMinusEdge:
+    edgeName: 0
+    symmetric: 0

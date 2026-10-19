@@ -7,14 +7,14 @@ namespace BuildingGen
 	{
 		public TilePrototype prototype;
 
-		public int yPlusEdge;
-		public int yMinusEdge;
+		public VertEdge yPlusEdge;
+		public VertEdge yMinusEdge;
 
-		public int zPlusEdge;
-		public int zMinusEdge;
+		public HorzEdge zPlusEdge;
+		public HorzEdge zMinusEdge;
 
-		public int xPlusEdge;
-		public int xMinusEdge;
+		public HorzEdge xPlusEdge;
+		public HorzEdge xMinusEdge;
 
 		public List<Tile> yPlusNeighbors;
 		public List<Tile> yMinusNeighbors;
@@ -35,18 +35,18 @@ namespace BuildingGen
 			//TODO maybe all the edges should be in a list like this throughout the code instead of seperate vars.
 
 			//rotate edges
-			Queue<int> pEdges = new Queue<int>(new int[] { proto.zPlusEdge, proto.xPlusEdge, proto.zMinusEdge, proto.xMinusEdge });
+			Queue<EdgeInfo> pEdges = new Queue<EdgeInfo>(new EdgeInfo[] { proto.zPlusEdge, proto.xPlusEdge, proto.zMinusEdge, proto.xMinusEdge });
 			for (int i = 0; i < yRotations; i++)
 			{
 				pEdges.Enqueue(pEdges.Dequeue());
 			}
-			zPlusEdge = pEdges.Dequeue();
-			xPlusEdge = pEdges.Dequeue();
-			zMinusEdge = pEdges.Dequeue();
-			xMinusEdge = pEdges.Dequeue();
+			zPlusEdge = (HorzEdge)pEdges.Dequeue();
+			xPlusEdge = (HorzEdge)pEdges.Dequeue();
+			zMinusEdge = (HorzEdge)pEdges.Dequeue();
+			xMinusEdge = (HorzEdge)pEdges.Dequeue();
 
-			yPlusEdge = proto.yPlusEdge;
-			yMinusEdge = proto.yMinusEdge;
+			yPlusEdge = (VertEdge)proto.yPlusEdge;
+			yMinusEdge = (VertEdge)proto.yMinusEdge;
 
 			yPlusNeighbors = new();
 			yMinusNeighbors = new();
@@ -60,16 +60,16 @@ namespace BuildingGen
 		{
 			//TODO do something better than the weird tuple matrix?
 			//compare edges with another tile, and add to the neighbors list for both this and the other tile if possible
-			(int, int, List<Tile>, List<Tile>)[] edgeNeighborPairs ={
+			(EdgeInfo, EdgeInfo, List<Tile>, List<Tile>)[] edgeNeighborPairs ={
 			(zPlusEdge, other.zMinusEdge, zPlusNeighbors, other.zMinusNeighbors),
 			(zMinusEdge, other.zPlusEdge, zMinusNeighbors, other.zPlusNeighbors),
 			(xPlusEdge, other.xMinusEdge, xPlusNeighbors, other.xMinusNeighbors),
 			(xMinusEdge, other.xPlusEdge, xMinusNeighbors, other.xPlusNeighbors),
 			(yPlusEdge, other.yMinusEdge, yPlusNeighbors, other.yMinusNeighbors),
 			(yMinusEdge, other.yPlusEdge, yMinusNeighbors, other.yPlusNeighbors)};
-			foreach ((int, int, List<Tile>, List<Tile>) p in edgeNeighborPairs)
+			foreach ((EdgeInfo, EdgeInfo, List<Tile>, List<Tile>) p in edgeNeighborPairs)
 			{
-				if (p.Item1 == p.Item2 || p.Item1 == -1 || p.Item2 == -1) // -1 means it connects to anything
+				if (p.Item1.ToString() == p.Item2.ToString() ||p.Item1.ToString() == "-1" || p.Item2.ToString() == "-1") // -1 means it connects to anything
 				{
 					if (!p.Item3.Contains(other)) p.Item3.Add(other);
 					if (!p.Item4.Contains(this)) p.Item4.Add(this);

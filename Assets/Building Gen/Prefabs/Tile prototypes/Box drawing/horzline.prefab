@@ -64,13 +64,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       insertIndex: -1
       addedObject: {fileID: -3555976676463539464}
+    - targetCorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6419522163713494681}
   m_SourcePrefab: {fileID: 100100000, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
 --- !u!1 &3902463517820009547 stripped
 GameObject:
@@ -98,3 +102,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.5, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6419522163713494681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3902463517820009547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
+  yPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  yMinusEdge:
+    edgeName: 0
+    symmetric: 0
+  zPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  zMinusEdge:
+    edgeName: 0
+    symmetric: 0
+  xPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  xMinusEdge:
+    edgeName: 0
+    symmetric: 0

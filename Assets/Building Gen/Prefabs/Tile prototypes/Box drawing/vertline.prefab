@@ -16,6 +16,22 @@ PrefabInstance:
       propertyPath: yMinusEdge
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: yPlusEdge.edgeName
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: yMinusEdge.edgeName
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: yPlusEdge.symmetric
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: yMinusEdge.symmetric
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1064293165804504076, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -64,13 +80,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6857881044689998883}
+    - targetCorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7887318597979262104}
   m_SourcePrefab: {fileID: 100100000, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
 --- !u!1 &3902463517820009547 stripped
 GameObject:
@@ -98,3 +118,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 2, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7887318597979262104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3902463517820009547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
+  yPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  yMinusEdge:
+    edgeName: 0
+    symmetric: 0
+  zPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  zMinusEdge:
+    edgeName: 0
+    symmetric: 0
+  xPlusEdge:
+    edgeName: 0
+    symmetric: 0
+  xMinusEdge:
+    edgeName: 0
+    symmetric: 0
