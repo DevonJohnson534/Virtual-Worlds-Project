@@ -4,7 +4,7 @@ namespace Voronoi
 {
     public struct Cell
     {
-            public Vector2 centroid;
+            public Vector2 center;
             public Line[] boundaries;
     }
 }
