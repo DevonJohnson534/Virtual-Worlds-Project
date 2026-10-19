@@ -26,7 +26,7 @@ namespace Voronoi
             limits.boundaries[1] = new Line(corner2, corner3);
             limits.boundaries[2] = new Line(corner3, corner4);
             limits.boundaries[3] = new Line(corner4, corner1);
-            limits.centroid = new Vector2(0, 0); //does not have to be 0,0. can be centered elsewhere.
+            limits.center = new Vector2(0, 0);
 
             Cell[] cells = new Cell[centroids.Count];
 
@@ -94,7 +94,7 @@ namespace Voronoi
                         }
                     }
                 }
-                cell.centroid = currentPoint;
+                cell.center = currentPoint;
                 cells[completed] = cell;
                 completed++;
             }
