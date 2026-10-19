@@ -1,5 +1,6 @@
 using System.IO;
 using System.Net;
+using System.Threading;
 using UnityEngine;
 using Voronoi;
 
@@ -12,34 +13,48 @@ public class Streets : MonoBehaviour
     private void Start()
     {
 		cellHandler = FindAnyObjectByType<CellHandler>();
+		materializeCells(cellHandler.cells);
         buildStreets(cellHandler.cells, thickness);
     }
 
     private void buildStreets(Cell[] cells, float thickness)
 	{
+		int count = 0;
 		foreach(Cell cell in cells)
 		{
-			foreach(Line boundary in cell.boundaries)
-			{
-			Vector2[] topVerticies = new Vector2[4];
-			topVerticies[0] = boundary.start;
-			topVerticies[1] = boundary.end;
-			topVerticies[2] = getInnerPoint(boundary.start, cell.center, thickness);
-			topVerticies[3] = getInnerPoint(boundary.end, cell.center, thickness);
+			Line[] boundaries = cell.boundaries;
 
-			GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
-			go.transform.localScale = new Vector3(1, 1, 1);
-			go.GetComponent<MeshFilter>().mesh = getMesh(topVerticies);
-			go.GetComponent<MeshRenderer>().material = streetMaterial;
+			for (int i = 0; i < boundaries.Length; i++)
+			{
+				Line boundary = boundaries[i];
+
+				Vector2[] topVerticies = new Vector2[4];
+				topVerticies[0] = boundary.start;
+				topVerticies[1] = boundary.end;
+				topVerticies[2] = getBetweenPoint(boundary, boundaries[(i + 1) % boundaries.Length], thickness);
+				topVerticies[3] = getBetweenPoint(boundaries[(boundaries.Length + (i - 1)) % boundaries.Length], boundary, thickness);
+
+
+				GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
+				go.transform.localScale = new Vector3(1, 1, 1);
+				go.GetComponent<MeshFilter>().mesh = getMesh(topVerticies);
+				go.GetComponent<MeshRenderer>().material = streetMaterial;
+				go.name = "wall of center: " + count;
             }
+			count++;
 		}
 	}
 
-	private static Vector2 getInnerPoint(Vector2 outerPoint, Vector2 centerPoint, float distance)
+
+    private Vector2 getBetweenPoint(Line a, Line b, float distance)
 	{
-		Vector2 direction = outerPoint - centerPoint;
-		return direction.normalized * distance;
-	}
+		Vector2 mid = a.end;
+		Vector2 dir1 = (a.start - mid).normalized;
+		Vector2 dir2 = (b.end - mid).normalized;
+		Vector2 midDirection = (dir1 + dir2).normalized;
+
+		return midDirection * distance;
+    }
 
 	private static Mesh getMesh(Vector2[] topVerticies)
 	{
@@ -53,9 +68,9 @@ public class Streets : MonoBehaviour
         triangles[1] = 1;
         triangles[2] = 2;
 
-        triangles[3] = 2;
-        triangles[4] = 1;
-        triangles[5] = 3;
+        triangles[3] = 0;
+        triangles[4] = 2;
+        triangles[5] = 1;
 
 		Mesh mesh = new Mesh();
 
