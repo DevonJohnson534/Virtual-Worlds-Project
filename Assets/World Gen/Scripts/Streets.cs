@@ -13,7 +13,7 @@ public class Streets : MonoBehaviour
     private void Start()
     {
 		cellHandler = FindAnyObjectByType<CellHandler>();
-		materializeCells(cellHandler.cells);
+		//materializeCells(cellHandler.cells);
         buildStreets(cellHandler.cells, thickness);
     }
 
@@ -34,7 +34,6 @@ public class Streets : MonoBehaviour
 				topVerticies[2] = getBetweenPoint(boundary, boundaries[(i + 1) % boundaries.Length], thickness);
 				topVerticies[3] = getBetweenPoint(boundaries[(boundaries.Length + (i - 1)) % boundaries.Length], boundary, thickness);
 
-
 				GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
 				go.transform.localScale = new Vector3(1, 1, 1);
 				go.GetComponent<MeshFilter>().mesh = getMesh(topVerticies);
@@ -52,8 +51,7 @@ public class Streets : MonoBehaviour
 		Vector2 dir1 = (a.start - mid).normalized;
 		Vector2 dir2 = (b.end - mid).normalized;
 		Vector2 midDirection = (dir1 + dir2).normalized;
-
-		return midDirection * distance;
+		return mid + (midDirection * distance);
     }
 
 	private static Mesh getMesh(Vector2[] topVerticies)
@@ -70,7 +68,7 @@ public class Streets : MonoBehaviour
 
         triangles[3] = 0;
         triangles[4] = 2;
-        triangles[5] = 1;
+        triangles[5] = 3;
 
 		Mesh mesh = new Mesh();
 
