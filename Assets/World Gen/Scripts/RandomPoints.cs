@@ -16,13 +16,17 @@ public static class RandomPoints //Poission disk sampling Sebastian Lague on you
 {
     public static List<Vector2> getRandomPoints(Vector2 limits, int numPoints, float minDistance)
     {
-        float gridSeperation = minDistance / Mathf.Sqrt(2);
-        int[,] grid = new int[(int) Mathf.Ceil(limits.x /* gridSeperation*/), (int) Mathf.Ceil(limits.y /*gridSeperation*/)];
+        float gridUnit = minDistance / Mathf.Sqrt(2);
+        int[,] grid = new int[(int) Mathf.Ceil(limits.x / gridUnit) + 1, (int) Mathf.Ceil(limits.y / gridUnit) + 1];
         List<Vector2> allPoints = new List<Vector2>();
-        allPoints.Add(Vector2.zero);
 
         List<Vector2> branchPoints = new List<Vector2>();
+
+        //0,0 always has a cell 'centered' around it.
         branchPoints.Add(limits / 2);
+        allPoints.Add(Vector2.zero);
+        grid[0, 0] = 1;
+
 
         while (branchPoints.Count > 0 && allPoints.Count <= numPoints)
         {
@@ -37,14 +41,13 @@ public static class RandomPoints //Poission disk sampling Sebastian Lague on you
                 Vector2 direction = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
                 Vector2 candidatePoint = branchPoint + (direction * Random.Range(minDistance, 4 * minDistance));
 
-                int gridX = (int) Mathf.Ceil(candidatePoint.x / gridSeperation); 
-                int gridY = (int) Mathf.Ceil(candidatePoint.y / gridSeperation);
+                int gridX = (int) Mathf.Ceil(candidatePoint.x / gridUnit); 
+                int gridY = (int) Mathf.Ceil(candidatePoint.y / gridUnit);
 
-                if(validPoint(candidatePoint, grid, gridSeperation, allPoints, limits, minDistance))
+                if(validPoint(candidatePoint, grid, gridUnit, allPoints, limits, minDistance))
                 {
                     allPoints.Add((2 * candidatePoint) - limits);
                     branchPoints.Add(candidatePoint);
-
                     grid[gridX, gridY] = allPoints.Count;
 
                     created = true;
@@ -63,8 +66,7 @@ public static class RandomPoints //Poission disk sampling Sebastian Lague on you
     }
 
 
-
-    private static bool validPoint(Vector2 point, int[,] grid, float gridSeperation, List<Vector2> allPoints, Vector2 limits, float minDistance)
+    private static bool validPoint(Vector2 point, int[,] grid, float gridUnit, List<Vector2> allPoints, Vector2 limits, float minDistance)
     {
         if (point.x < 0 || point.x > limits.x)
         {
@@ -76,8 +78,8 @@ public static class RandomPoints //Poission disk sampling Sebastian Lague on you
             return false;
         }
 
-        int gridX = (int)Mathf.Ceil(point.x / gridSeperation);
-        int gridY = (int)Mathf.Ceil(point.y / gridSeperation);
+        int gridX = (int)Mathf.Ceil(point.x / gridUnit);
+        int gridY = (int)Mathf.Ceil(point.y / gridUnit);
 
         int minX = Mathf.Max(gridX - 2, 0);
         int maxX = Mathf.Min(gridX + 2, grid.GetLength(0) - 1);

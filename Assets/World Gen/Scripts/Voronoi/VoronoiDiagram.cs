@@ -12,7 +12,7 @@ namespace Voronoi
         {
             this.limit = limit;
         }
-        public Cell[] getCells(List<Vector2> centroids)
+        public Cell[] getCells(List<Vector2> points)
         {
 
             Cell limits = new Cell();
@@ -26,16 +26,17 @@ namespace Voronoi
             limits.boundaries[1] = new Line(corner2, corner3);
             limits.boundaries[2] = new Line(corner3, corner4);
             limits.boundaries[3] = new Line(corner4, corner1);
-            limits.center = new Vector2(0, 0);
+            limits.center = points[0];
+            Debug.Log(limits.center);
 
-            Cell[] cells = new Cell[centroids.Count];
+            Cell[] cells = new Cell[points.Count];
 
             int completed = 0;
-            foreach (Vector2 currentPoint in centroids)
+            foreach (Vector2 currentPoint in points)
             {
                 Cell cell = new Cell { boundaries = limits.boundaries };
 
-                foreach (Vector2 point in centroids)
+                foreach (Vector2 point in points)
                 {
                     if (point == currentPoint)
                     {
