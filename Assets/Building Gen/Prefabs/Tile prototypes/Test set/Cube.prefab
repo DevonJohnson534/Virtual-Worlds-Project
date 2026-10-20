@@ -35,22 +35,22 @@ PrefabInstance:
     - target: {fileID: 1064293165804504076, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+      objectReference: {fileID: -5495902117074765545, guid: 4c60df733197b0f4e9537e5ff7fd358c, type: 3}
     - target: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Name
       value: Cube
       objectReference: {fileID: 0}
     - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -143,20 +143,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
   yPlusEdge:
-    edgeName: 0
+    edgeName: 4
     symmetric: 0
+    rotIndex: 0
   yMinusEdge:
-    edgeName: 0
+    edgeName: 4
     symmetric: 0
+    rotIndex: 0
   zPlusEdge:
-    edgeName: 0
+    edgeName: 4
     symmetric: 0
+    flipped: 0
   zMinusEdge:
-    edgeName: 0
+    edgeName: 4
     symmetric: 0
+    flipped: 0
   xPlusEdge:
-    edgeName: 0
+    edgeName: 4
     symmetric: 0
+    flipped: 0
   xMinusEdge:
-    edgeName: 0
+    edgeName: 4
     symmetric: 0
+    flipped: 0

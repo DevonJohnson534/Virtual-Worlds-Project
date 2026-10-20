@@ -132,20 +132,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
   yPlusEdge:
-    edgeName: 0
+    edgeName: 8
     symmetric: 0
+    rotIndex: 0
   yMinusEdge:
-    edgeName: 0
+    edgeName: 4
     symmetric: 0
+    rotIndex: 0
   zPlusEdge:
-    edgeName: 0
+    edgeName: 9
     symmetric: 0
+    flipped: 0
   zMinusEdge:
-    edgeName: 0
+    edgeName: 10
     symmetric: 0
+    flipped: 0
   xPlusEdge:
-    edgeName: 0
+    edgeName: 6
     symmetric: 0
+    flipped: 0
   xMinusEdge:
-    edgeName: 0
+    edgeName: 7
     symmetric: 0
+    flipped: 0

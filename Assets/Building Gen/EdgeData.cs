@@ -3,11 +3,14 @@ using System.Linq;
 using UnityEngine;
 using Unity.Mathematics;
 
-#if UNITY_EDITOR //TODO is this correct usage?
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
+//TODO finish rotations. right now it seems to be doing some flipping with the UV stuff. keep or change?
+//TODO how to handle vertical vs horizontal edges?
 
 namespace BuildingGen {
+#if UNITY_EDITOR
 	[CreateAssetMenu(fileName = "EdgeData", menuName = "Scriptable Objects/EdgeData")]
 	public class EdgeData : ScriptableObject
 	{
@@ -15,67 +18,32 @@ namespace BuildingGen {
 		private const int edgeDist = 1; //this is the distance from the center where the edges are. aka half of tile size
 		private const float comparisonTolerance = 0.0005f; //used when comparing floats
 
-		public Dictionary<Profile, int> profileToEdgeName { get; private set; }
+		public Dictionary<string, int> profileToEdgeName { get; private set; }
 		private int nextEdgeName;
 		public class Profile
 		{
-			public List<Vector3> verts;
-			public Profile(List<Vector3> _verts)
+			//a "Profile" is all the verticies on an "Edge" which is one of a mesh's 6 boundary box faces
+			public List<Vector2> verts;
+			public Profile(List<Vector2> _verts)
 			{
 				verts = _verts;
 			}
-		}
-		public class FaceEqualityComparer : IEqualityComparer<Profile>
-		{
-			public bool Equals(Profile f1, Profile f2)
+			public string GetKey() //this is for the profileToEdgeName dictionary keys
 			{
-				if (ReferenceEquals(f1, f2))
-					return true;
+				if (verts == null || verts.Count == 0) return "EMPTY";
 
-				if (f2 is null || f1 is null)
-					return false;
-
-				if (f2.verts.Count != f1.verts.Count)
-					return false;
-
-				for (int i = 0; i < f1.verts.Count; i++)
-				{
-					if (Vector3.Distance(f1.verts[i], f2.verts[i]) > comparisonTolerance) return false;
-				}
-				return true;
-			}
-			public int GetHashCode(Profile profile)
-			{
-				Hash128 code = new();
-				for (int i = 0;i < profile.verts.Count; i++)
-				{
-					Vector3 v = profile.verts[i];
-					HashUtilities.QuantisedVectorHash(ref v, ref code); //uses a step of 0.0005
-				}
-				return code.GetHashCode();
+				//round to tolerance and cut it to 4 decimal places. put in readable format
+				return string.Join("\n", verts.Select(v =>
+					 $"({Mathf.Round(v.x / comparisonTolerance) * comparisonTolerance:F4}," +
+					 $"{Mathf.Round(v.y / comparisonTolerance) * comparisonTolerance:F4})"));
 			}
 		}
-		public class VertEqualityComparer : IEqualityComparer<Vector3>
-		{
-			public bool Equals(Vector3 v1, Vector3 v2)
-			{
-				if (ReferenceEquals(v1, v2))
-					return true;
-
-				return (Vector3.Distance(v1, v2) < comparisonTolerance);
-			}
-			public int GetHashCode(Vector3 v)
-			{
-				Hash128 code = new();
-				HashUtilities.QuantisedVectorHash(ref v, ref code); //uses a step of 0.0005
-				return code.GetHashCode();
-			}
-		}
-
 		public void GenerateData()
 		{
-			profileToEdgeName = new Dictionary<Profile, int>(new FaceEqualityComparer());
-			profileToEdgeName.Add(new Profile(new()), 0); //add the empty profile as edge name 0
+			Debug.Log("Starting data generation");
+			//labels all the tile prototype prefabs with their correct edge data
+			profileToEdgeName = new();
+			profileToEdgeName.Add(new Profile(new()).GetKey(), 0); //add the empty profile as edge name 0
 			nextEdgeName = 1;
 
 			string[] guids = AssetDatabase.FindAssets("t:prefab", new string[] { TilePrototypesDirectory });
@@ -84,15 +52,17 @@ namespace BuildingGen {
 				string path = AssetDatabase.GUIDToAssetPath(guid);
 				GameObject asset = AssetDatabase.LoadAssetAtPath<GameObject>(path);
 				TilePrototype tileProto = asset.GetComponent<TilePrototype>();
+
 				if (asset.GetComponent<MeshFilter>() != null)
 				{
 					Debug.Log("Processing " + asset.name);
 					Mesh mesh = asset.GetComponent<MeshFilter>().sharedMesh;
+
 					SetEdgeInfo(asset.name, tileProto, mesh);
 				}
 				else
 				{
-					Debug.Log(asset.name + " has no mesh filter. adding empty edges.");
+					Debug.Log("Processing "+asset.name + ", but it has no mesh filter. adding empty edges.");
 					tileProto.xMinusEdge.edgeName = 0;
 					tileProto.xPlusEdge.edgeName = 0;
 					tileProto.yMinusEdge.edgeName = 0;
@@ -100,97 +70,93 @@ namespace BuildingGen {
 					tileProto.zMinusEdge.edgeName = 0;
 					tileProto.zPlusEdge.edgeName = 0;
 				}
+
+				EditorUtility.SetDirty(tileProto); //this means that changes made to the prefab's TilePrototype can be saved
 			}
-			Debug.Log("Data generation is complete!");
+
+			//AssetDatabase.SaveAssets(); //saves the edited prefabs automatically
+			Debug.Log("Data generation complete!");
 		}
 
 		private void SetEdgeInfo(string assetName, TilePrototype tileProto, Mesh mesh)
 		{
-			tileProto.xPlusEdge.edgeName = profileToEdgeName[GetMeshProfile(assetName, mesh, 0, 1)];
-			tileProto.xMinusEdge.edgeName = profileToEdgeName[GetMeshProfile(assetName, mesh, 0, -1)];
+			tileProto.xPlusEdge.edgeName = FindEdgeName(assetName, mesh, 0, 1);
+			tileProto.xMinusEdge.edgeName = FindEdgeName(assetName, mesh, 0, -1);
 
-			tileProto.yPlusEdge.edgeName = profileToEdgeName[GetMeshProfile(assetName, mesh, 1, 1)];
-			tileProto.yMinusEdge.edgeName = profileToEdgeName[GetMeshProfile(assetName, mesh, 1, -1)];
+			tileProto.yPlusEdge.edgeName = FindEdgeName(assetName, mesh, 1, 1);
+			tileProto.yMinusEdge.edgeName = FindEdgeName(assetName, mesh, 1, -1);
 
-			tileProto.zPlusEdge.edgeName = profileToEdgeName[GetMeshProfile(assetName, mesh, 2, 1)];
-			tileProto.zMinusEdge.edgeName = profileToEdgeName[GetMeshProfile(assetName, mesh, 2, -1)];
+			tileProto.zPlusEdge.edgeName = FindEdgeName(assetName, mesh, 2, 1);
+			tileProto.zMinusEdge.edgeName = FindEdgeName(assetName, mesh, 2, -1);
 		}
+		private Dictionary<int, (int,int,int)> uvFromProfileAxis = new(){ {0, (2,1,1)}, {1, (2,0,-1)}, { 2, (0,1,-1) } }; //axis => u, v, udir
 
-		private Profile GetMeshProfile(string name, Mesh mesh, int profileAxis, int profileDir)
+		private int FindEdgeName(string name, Mesh mesh, int profileAxis, int profileDir)
 		{
-			//faceAxis is 0,1,2 meaning x,y,z    faceDir is -1 or 1 meaning the way the face is facing
+			//profileAxis is 0,1,2 meaning x,y,z    profileDir is -1 or 1 meaning if it is the positive or negative side
 			List<Vector3> allVerts = new();
 			mesh.GetVertices(allVerts);
 
-			List<Vector3> profileVerts = new();
+			int uAxis = uvFromProfileAxis[profileAxis].Item1;
+			int vAxis = uvFromProfileAxis[profileAxis].Item2;
 
+			int uDir = uvFromProfileAxis[profileAxis].Item3;
+			if (profileDir == -1) { uDir = -uDir; }
+
+			//get the profile and store it as 2D
+			List<Vector2> profileVerts = new();
 			for (int i = 0; i < allVerts.Count; i++)
 			{
 				Vector3 vert = allVerts[i];
-				if (math.abs(vert[profileAxis] - profileDir* edgeDist) < comparisonTolerance)
+				if (name == "Cube") { Debug.Log(vert.x + "," + vert.y + "," + vert.z); }
+				if (math.abs(vert[profileAxis] - profileDir * edgeDist) < comparisonTolerance)
 				{
-					//store them all facing the same way, which is faceaxis=0 and facedir=1 aka posX direction
-					profileVerts.Add(RotateVert(vert, profileAxis, profileDir));
+					if (name == "Cube") { Debug.Log("    On edge!"); }
+					float u = vert[uAxis] * uDir;
+					float v = vert[vAxis];
+
+					profileVerts.Add(new Vector2(u, v));
 				}
 			}
-			Profile face = new Profile(profileVerts
-											 .Distinct(new VertEqualityComparer())
-											 .OrderBy(v => v.x)
-											 .ThenBy(v => v.y)
-											 .ThenBy(v => v.z)
-											 .ToList());
-			Debug.Log("axis: "+ profileAxis + " dir: "+ profileDir);
-			foreach (Vector3 vert in face.verts)
+
+			//get rid of the super close together verts    TODO is this correct/safe for hashing?
+			List<Vector2> uniqueVerts = new List<Vector2>();
+			foreach (var v in profileVerts)
 			{
-				Debug.Log("     " + vert.x + "   " + vert.y + "   " + vert.z);
+				if (!uniqueVerts.Any(existing => Vector3.Distance(existing, v) < comparisonTolerance))
+				{
+					uniqueVerts.Add(v);
+				}
 			}
 
-			if (!profileToEdgeName.ContainsKey(face))
+			//sort them so identical profiles are always in the same order
+			List<Vector2> sortedVerts = uniqueVerts
+		  .OrderBy(v => Mathf.Round(v.x / comparisonTolerance))
+		  .ThenBy(v => Mathf.Round(v.y / comparisonTolerance))
+		  .ToList();
+
+			Profile face = new Profile(sortedVerts);
+			string faceKey = face.GetKey();
+
+			if (!profileToEdgeName.ContainsKey(faceKey))
 			{
-				profileToEdgeName.Add(face, nextEdgeName);
+				profileToEdgeName.Add(faceKey, nextEdgeName);
+				SaveRotations(face, (profileAxis == 1));
 				nextEdgeName++;
 			}
-			return face;
+			return profileToEdgeName[faceKey];
 		}
-
-		private Vector3 RotateVert(Vector3 vert, int profileAxis, int profileDir)
+		private void SaveRotations(Profile face, bool isVert)
 		{
-			float3x3 mat = float3x3.identity;
-			switch ((profileAxis+1) * profileDir)
+			//generate the rotated versions and save them to profileToEdgeName
+			if (isVert)
 			{
-				case 1: //+X
-					mat = float3x3.identity;
-					break;
-				case -1: //-X
-					mat = new float3x3(-1, 0, 0,
-											 0, 1, 0,
-											 0, 0, 1);
-					break;
-				case 2:  //+Y
-					mat = new float3x3(0, 1, 0,
-											 -1, 0, 0,
-											 0, 0, 1);
-					break;
-				case -2: //-Y
-					mat = new float3x3(0, -1, 0,
-											 1, 0, 0,
-											 0, 0, 1);
-					break;
-				case 3:  //+Z
-					mat = new float3x3(0, 0, 1,
-											 0, 1, 0,
-											 -1, 0, 0);
-					break;
-				case -3: //-Z
-					mat = new float3x3(0, 0, -1,
-											 0, 1, 0,
-											 1, 0, 0);
-					break;
-				default:
-					Debug.Log("ERROR ROTATING axis:"+profileAxis+" dir:"+profileDir);
-					break;
+				//if not symmetrical, generate rotational indexes
 			}
-			return math.mul(mat, vert);
+			else
+			{
+				//if not symmetrical, generate flipped version
+			}
 		}
 	}
 
@@ -214,16 +180,10 @@ namespace BuildingGen {
 				foreach (var (key, value) in myScript.profileToEdgeName)
 				{
 					GUILayout.Label(value.ToString());
-					string text = "";
-					string warnings = "";
-					foreach (Vector3 vert in key.verts)
-					{
-						if (vert.x != 1) warnings += ("WARNING X!=1  instead x="+vert.x+"\n");
-						text += ("("+vert.y + "," + vert.z+ ")\n");
-					}
-					GUILayout.TextArea(warnings+"\n"+ text);
+					GUILayout.TextArea(key);
 				}
 			}
 		}
 	}
+#endif
 }

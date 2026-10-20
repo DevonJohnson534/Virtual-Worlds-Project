@@ -549,6 +549,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 897309065854651706, guid: e28a15960b4cfcc4ebbd367af567bd7f, type: 3}
     - target: {fileID: 8681761710089545867, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
+      propertyPath: tilePrototypes.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8681761710089545867, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
       propertyPath: 'tilePrototypes.Array.data[0]'
       value: 
       objectReference: {fileID: 7887318597979262104, guid: 8f5cac49d0b8298418a4a26b62658287, type: 3}
@@ -564,6 +568,10 @@ PrefabInstance:
       propertyPath: 'tilePrototypes.Array.data[3]'
       value: 
       objectReference: {fileID: 2293330809889163253, guid: 4183c1dfd69eb9241a3ea674c51f621e, type: 3}
+    - target: {fileID: 8681761710089545867, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[4]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 543e40e8b8c71ec49b6058cb07f1231b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
