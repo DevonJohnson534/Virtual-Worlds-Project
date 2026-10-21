@@ -12,9 +12,8 @@ namespace Voronoi
         {
             this.limit = limit;
         }
-        public Cell[] getCells(List<Vector2> points)
+        public List<Cell> getCells(List<Vector2> points)
         {
-
             Cell limits = new Cell();
             limits.boundaries = new Line[4];// no voroni outside this space. a square for now
             Vector2 corner1 = new Vector2(-limit, -limit); //turn into a fucniton later probably.
@@ -27,9 +26,8 @@ namespace Voronoi
             limits.boundaries[2] = new Line(corner3, corner4);
             limits.boundaries[3] = new Line(corner4, corner1);
             limits.center = points[0];
-            Debug.Log(limits.center);
 
-            Cell[] cells = new Cell[points.Count];
+            List<Cell> cells = new List<Cell>(points.Count);
 
             int completed = 0;
             foreach (Vector2 currentPoint in points)
@@ -96,8 +94,7 @@ namespace Voronoi
                     }
                 }
                 cell.center = currentPoint;
-                cells[completed] = cell;
-                completed++;
+                cells.Add(cell);
             }
 
             return cells;
@@ -107,7 +104,8 @@ namespace Voronoi
 
         private bool inCell(Vector2 point, Cell cell)
         {
-            Vector2 mid = (cell.boundaries[0].start + cell.boundaries[0].start) / 2;
+
+            Vector2 mid = (cell.boundaries[0].start + cell.boundaries[0].end) / 2;
             Vector2 direction = point - mid;
             Vector2 farEnd = point + limit * direction;
 

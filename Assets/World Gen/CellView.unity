@@ -275,9 +275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8f484edcecfd7442b90608559a282b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CellHandler
-  boundDistance: 100
-  numberOfCells: 1
-  minDistance: 20
+  boundDistance: 500
+  numberOfCells: 50
+  minDistance: 100
 --- !u!4 &779595251
 Transform:
   m_ObjectHideFlags: 0
@@ -380,7 +380,7 @@ Transform:
   m_GameObject: {fileID: 807773668}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalPosition: {x: 0, y: 980, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -459,8 +459,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999c6afb61b011f4c901897f67901da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Streets
-  thickness: 2
-  streetMaterial: {fileID: 0}
+  thickness: 4
+  streetMaterial: {fileID: 2100000, guid: 9b02b10bd841a1e479af0751505639a9, type: 2}
 --- !u!4 &1408203964
 Transform:
   m_ObjectHideFlags: 0
