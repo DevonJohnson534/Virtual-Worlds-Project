@@ -39,7 +39,7 @@ public static class RandomPoints //Poission disk sampling Sebastian Lague on you
             {
                 float angle = Random.Range(0, 2 * Mathf.PI);
                 Vector2 direction = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
-                Vector2 candidatePoint = branchPoint + (direction * Random.Range(minDistance, 4 * minDistance));
+                Vector2 candidatePoint = branchPoint + (direction * Random.Range(minDistance, 4 * minDistance)); //i think im technically wrong in multiplying by 4 and not 2 but I like the look of this.
 
                 int gridX = (int) Mathf.Ceil(candidatePoint.x / gridUnit); 
                 int gridY = (int) Mathf.Ceil(candidatePoint.y / gridUnit);
@@ -65,6 +65,15 @@ public static class RandomPoints //Poission disk sampling Sebastian Lague on you
         return allPoints;
     }
 
+
+    public static List<Vector2> getPredefinedPoints() // i use this for testing
+    {
+        List<Vector2> allPoints = new List<Vector2>();
+        allPoints.Add(Vector2.zero);
+        allPoints.Add(new Vector2(-69.66785f, 74.59938f));
+
+        return allPoints;
+    }
 
     private static bool validPoint(Vector2 point, int[,] grid, float gridUnit, List<Vector2> allPoints, Vector2 limits, float minDistance)
     {

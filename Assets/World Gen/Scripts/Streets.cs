@@ -3,6 +3,8 @@ using System.Net;
 using System.Threading;
 using UnityEngine;
 using Voronoi;
+using System.Collections.Generic;
+
 
 public class Streets : MonoBehaviour
 {
@@ -13,11 +15,10 @@ public class Streets : MonoBehaviour
     private void Start()
     {
 		cellHandler = FindAnyObjectByType<CellHandler>();
-		//materializeCells(cellHandler.cells);
         buildStreets(cellHandler.cells, thickness);
     }
 
-    private void buildStreets(Cell[] cells, float thickness)
+    private void buildStreets(List<Cell> cells, float thickness)
 	{
 		int count = 0;
 		foreach(Cell cell in cells)
@@ -34,10 +35,13 @@ public class Streets : MonoBehaviour
 				topVerticies[2] = getBetweenPoint(boundary, boundaries[(i + 1) % boundaries.Length], thickness);
 				topVerticies[3] = getBetweenPoint(boundaries[(boundaries.Length + (i - 1)) % boundaries.Length], boundary, thickness);
 
-				GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
+				GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider));
+				
 				go.transform.localScale = new Vector3(1, 1, 1);
-				go.GetComponent<MeshFilter>().mesh = getMesh(topVerticies);
+				Mesh mesh = getMesh(topVerticies);
+				go.GetComponent<MeshFilter>().mesh = mesh;
 				go.GetComponent<MeshRenderer>().material = streetMaterial;
+				go.GetComponent<MeshCollider>().sharedMesh = mesh;
 				go.name = "wall of center: " + count;
             }
 			count++;
@@ -81,7 +85,7 @@ public class Streets : MonoBehaviour
 
 
 
-	public static void materializeCells(Cell[] cells) // visualization purposes. 
+	public static void materializeCells(List<Cell> cells) // visualization purposes. 
 	{
 
         Color[] colors = new UnityEngine.Color[3];

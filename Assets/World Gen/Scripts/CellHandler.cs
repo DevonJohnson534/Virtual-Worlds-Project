@@ -4,11 +4,11 @@ using Voronoi;
 
 public class CellHandler : MonoBehaviour
 {
-    public float boundDistance = 100;
-    public int numberOfCells = 3;
-    public float minDistance = 10;
+    public float boundDistance;
+    public int numberOfCells;
+    public float minDistance;
 
-    public Cell[] cells;
+    public List<Cell> cells;
     void Awake()
     {
 
