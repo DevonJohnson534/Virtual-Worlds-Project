@@ -7,7 +7,7 @@ public class PlayerSensor : MonoBehaviour
     public event PlayerEnterEvent onPlayerEnter;
     public event PlayerExitEvent onPlayerExit;
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out PlayerController player))
         {
@@ -15,7 +15,7 @@ public class PlayerSensor : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if(other.TryGetComponent(out PlayerController player))
         {

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -40,6 +41,13 @@ public class PlayerController : MonoBehaviour
         _rotationX -= rotationVector.y * RotationSpeed;
         _rotationX = Mathf.Clamp(_rotationX, MinPitch, MaxPitch);
         CameraTransform.localRotation = Quaternion.Euler(_rotationX, 0, 0);
+    }
+
+    public void ResetRotation()
+    {
+        _rotationX = 0; 
+        transform.localRotation = Quaternion.Euler(0, transform.rotation.y * -1, 0);
+        CameraTransform.localRotation = Quaternion.Euler(CameraTransform.rotation.x * -1, 0, 0);
     }
 
     public void Jump()

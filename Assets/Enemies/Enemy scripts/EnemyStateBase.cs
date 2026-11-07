@@ -15,7 +15,6 @@ namespace VirtualWorlds.FSM
         // state
         protected bool requestedExit;
         protected float exitTime;
-
         protected readonly Action<State<EnemyState, StateEvent>> onEnter;
         protected readonly Action<State<EnemyState, StateEvent>> onLogic;
         protected readonly Action<State<EnemyState, StateEvent>> onExit;
