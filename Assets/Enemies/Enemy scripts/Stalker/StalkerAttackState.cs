@@ -77,20 +77,37 @@ namespace VirtualWorlds.FSM
             // it's actively detrimental behavior.
 
             base.OnLogic();
+
+            //This is here to stop OnLogic from doing anything when it shouldn't be (when he's throwing)
+            //(and when he's exiting the state.)
             if (isThrowing || isFinishing)
             {
                 return;
             }
+
+            //If he's not doing either, a new state is allowed to occur.
             else if (requestedExit)
             {
                 fsm.StateCanExit();
             }
-            else if(stalker.grabSensor.GetComponent<BoxCollider>().enabled == false
-                && animator.GetCurrentAnimatorStateInfo(0).IsName("Big_attack"))
+            //These are basically lines that tell the stalker to enable its grab box once the animation actually begins.
+            //This is to prevent cases where the stalker is in the attack state and prematurely grab people despite
+            //having a mismatched animation. Just gives it time to catch up - this is also why it's not enabled on entry,
+            //cuz when we're entering we could still theoretically be all the way back in the whiff animation. 
+            //That second one, in the or, is there because the attack animation WILL actually be happening, 
+            //It's just that internally the animator think's its still the chase animation, because while it is interupptable,
+            //unity still interally waits for its timer to tick down before registering a new animation.
+            //So, we know implicitly if the next thing is big attack, and we're in this state, then we canceled the chase animation
+            //and are properly visiually aligned.
+            else if((stalker.grabSensor.GetComponent<BoxCollider>().enabled == false && animator.GetCurrentAnimatorStateInfo(0).IsName("Big_attack"))
+                || (animator.IsInTransition(0) && animator.GetNextAnimatorStateInfo(0).IsName("Big_attack")))
             {
                 stalker.grabSensor.GetComponent<BoxCollider>().enabled = true;
             }
 
+            //In the event the animation finishes - same deal, y'know, don't want a guy standing completely still to grab ya.
+            //We set the radius to .1 as a way to "force" the stalker to register it missed, because it will cause the player to 
+            //leave its attack trigger forcefully. We fix this on exit so it's back to proper size.
             else if (stalker.grabSensor.GetComponent<BoxCollider>().enabled == true 
                 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
@@ -118,6 +135,7 @@ namespace VirtualWorlds.FSM
             
             if (other.TryGetComponent(out PlayerController player))
             {
+                // Don't want him grabbing several times.
                 stalker.grabSensor.GetComponent<BoxCollider>().enabled = false;
                 isThrowing = true;
                 stalker.StartCoroutine(ThrowSequence(player));
@@ -145,6 +163,8 @@ namespace VirtualWorlds.FSM
         {
             SuccessfulAttack.Invoke();
             animator.SetTrigger("stab");
+            // Just stops us the players from knocking him around while he throws.
+            stalker.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             Quaternion OGRotation = player.transform.rotation;
             target.enabled = false;
 
@@ -215,7 +235,7 @@ namespace VirtualWorlds.FSM
                 player.transform.rotation = stalker.transform.rotation * Quaternion.Euler(29f, 0f, 0f);
                 yield return null; 
             }
-            // We say we can exit here so that the Stalker knows to go to idle before the player leaves the attack bubble, which would proc a different transition. 
+            // We say we can exit here so that the Stalker knows to go to idle before the player leaves the attack bubble, which would proc a the whiff transition. 
             fsm.StateCanExit();
             HeadTransparency.enabled = true;
             GlassesTransparency.enabled = true;
@@ -224,6 +244,9 @@ namespace VirtualWorlds.FSM
             player.transform.localScale = new Vector3(1, 1, 1);
 
 
+
+            // So this some BULLSHIT, but to summerize, it basically is a smooth way to make the player look at the stalker, then falllll
+            // back as they're THROWN away for some nice cinnematic flair. 
             float current_x = player.transform.rotation.x;
             float current_y = player.transform.rotation.y;
             float target_x = -90f;
@@ -242,6 +265,9 @@ namespace VirtualWorlds.FSM
                 speed += 0.006f;
                 counter++;
             }
+            stalker.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            // Because of the fucked up way unity's character controller works, we need to smoothly return to the player's rotation 
+            // pre-throw in order to prevent camera jolting nonsense. It also give the effect of standing up! 
             current_x = player.transform.rotation.x;
             target_x = 0f;
             counter = 0;
