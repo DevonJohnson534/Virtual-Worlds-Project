@@ -88,7 +88,7 @@ namespace VirtualWorlds.FSM
             // Trigger transitions occur when a state event is raised, and only then.
             // This is an event based approach! 
             //Procced by entering the stalk bubble
-            stalkerFSM.AddTriggerTransition(StalkerEvent.StalkerDetectPlayer, new Transition<StalkerState>(StalkerState.Idle, StalkerState.Stalk, onTransition: BeginStalking, condition: canTransition => !isTransitioning));
+            stalkerFSM.AddTriggerTransition(StalkerEvent.StalkerDetectPlayer, new Transition<StalkerState>(StalkerState.Idle, StalkerState.Stalk, condition: canTransition => !isTransitioning));
             //Procced by the player leaving the stalk bubble
             stalkerFSM.AddTriggerTransition(StalkerEvent.LostPlayerWhileStalking, new Transition<StalkerState>(StalkerState.Stalk, StalkerState.Idle, onTransition: StalkToIdle, condition: canTransition => !isTransitioning));
             //Procced by the Player entering chases initial box
@@ -103,11 +103,6 @@ namespace VirtualWorlds.FSM
             stalkerFSM.AddTriggerTransition(StalkerEvent.AttackRangeLeft, new Transition<StalkerState>(StalkerState.Attack, StalkerState.Chase, onTransition: AttackWhiff));
 
             stalkerFSM.Init();
-        }
-
-        private void BeginStalking(Transition<StalkerState> transition)
-        {
-            StartCoroutine(TriggerAnimation("activation", "Small_activate"));
         }
 
         private void StalkToIdle(Transition<StalkerState> transition)
