@@ -31,7 +31,7 @@ namespace VirtualWorlds.FSM
 
         [Header("Sensors")]
         [SerializeField]
-        private PlayerSensor stalkSensor;
+        public PlayerSensor stalkSensor;
         [SerializeField]
         private PlayerSensor chaseSensor;
         [SerializeField]
@@ -77,7 +77,7 @@ namespace VirtualWorlds.FSM
             // In the states, the first argument is whether or not it can be interuptted, it has exit time.
             // If it does, it cannot be interupttd, and needs to call StateCanExit before being permitted to exit.
             // if it doesn't (if it's false) it can be interrupted no problem.
-            stalkerFSM.AddState(StalkerState.Idle, new StalkerIdleState(false, this));
+            stalkerFSM.AddState(StalkerState.Idle, new StalkerIdleState(true, this, 2f));
             stalkerFSM.AddState(StalkerState.Stalk, new StalkState(true, this, player));
             stalkerFSM.AddState(StalkerState.Chase, new StalkerChaseState(true, this, player));
             stalkerFSM.AddState(StalkerState.Attack, attackState);
@@ -120,8 +120,6 @@ namespace VirtualWorlds.FSM
             // Disable the stalk box. 
             stalkCollider.enabled = false;
             StartCoroutine(StalkToChaseRoutine("small_to_big", "Small_To_Big"));
-            
-            
         }
 
         IEnumerator StalkToChaseRoutine(string animationTrigger, string animationName)
@@ -140,15 +138,25 @@ namespace VirtualWorlds.FSM
 
         private void RevertToIdle(Transition<StalkerState> transition)
         {
-            StartCoroutine(TriggerAnimation("big_to_small", "Big_to_small"));
-            StartCoroutine(TriggerAnimation("small_start_transition", "Small_transition_to_idle"));
-            StartCoroutine(TriggerAnimation("small_to_idle", "Small_Idle"));
+            StartCoroutine(RevertToIdleRoutine());
+        }
+
+        IEnumerator RevertToIdleRoutine()
+        {
+            yield return StartCoroutine(TriggerAnimation("big_to_small", "Big_to_small"));
+            yield return StartCoroutine(TriggerAnimation("small_start_transition", "Small_transition_to_idle"));
+            yield return StartCoroutine(TriggerAnimation("small_to_idle", "Small_Idle"));
             SphereCollider chaseCollider = chaseSensor.GetComponent<SphereCollider>();
             chaseCollider.radius = 2f;
             SphereCollider attackCollider = attackSensor.GetComponent<SphereCollider>();
             attackCollider.enabled = false;
             SphereCollider stalkCollider = stalkSensor.GetComponent<SphereCollider>();
             stalkCollider.enabled = true;
+            if (isInStalkRange)
+            {
+                // Checks if a player is in the bubble after the stalker has reverted to idle. For reaggroing. 
+                stalkerFSM.Trigger(StalkerEvent.StalkerDetectPlayer);
+            }
         }
 
         
@@ -213,7 +221,7 @@ namespace VirtualWorlds.FSM
             attackState.SuccessfulAttack += OnSuccessfulAttack; 
         }
 
-        IEnumerator TriggerAnimation(string animationTrigger, string animationName)
+        public IEnumerator TriggerAnimation(string animationTrigger, string animationName)
         {
             Debug.Log("Attempting to trigger" + animationTrigger);
             isTransitioning = true;

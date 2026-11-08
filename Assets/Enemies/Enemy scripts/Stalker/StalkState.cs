@@ -14,6 +14,7 @@ public class StalkState : StalkerAttackBase
         private Coroutine frozenRoutine;
         private Coroutine movingToLocationRoutine;
         private Coroutine movingToPlayerRoutine;
+        private string lastState = "None";
 
 
         private PlayerController target;
@@ -51,13 +52,14 @@ public class StalkState : StalkerAttackBase
             }
             else if (requestedExit && animator.GetCurrentAnimatorStateInfo(0).IsName("Small_walkcycle"))
             {
+                isExiting = true;
                 fsm.StateCanExit();
             }
-            else if (BeingLookedAt())
+            else if (BeingLookedAt() || lastState == "approach")
             {
                 OnSpot();
             }
-            else
+            else if (!BeingLookedAt() || lastState == "frozen")
             {
                 OnUnfreeze();
             }
@@ -96,7 +98,6 @@ public class StalkState : StalkerAttackBase
             // You have to stop the agent BEFORE disabling it - 
             // Trying to do so after disabling will not work. Vice versa is true. 
             agent.isStopped = true;
-            agent.enabled = false;
             // This is to stop physics from shoving the hat into the sky when he retreats into it.
             stalker.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             stalker.GetComponent<CapsuleCollider>().height = 1;
@@ -107,6 +108,7 @@ public class StalkState : StalkerAttackBase
 
         IEnumerator FrozenSupervisor()
         {
+            lastState = "frozen";
             Debug.Log("Currently frozen.");
             yield return stalker.StartCoroutine(Waiting());
             stalker.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -116,6 +118,7 @@ public class StalkState : StalkerAttackBase
 
         IEnumerator Waiting()
         {
+            yield return new WaitForSeconds(3f);
             while (BeingLookedAt())
             {
                 yield return new WaitForSeconds(3f);
@@ -124,6 +127,7 @@ public class StalkState : StalkerAttackBase
 
         IEnumerator ApproachPlayerSupervisor()
         {
+            lastState = "approach";
             Debug.Log("Attempting to reach player.");
             yield return stalker.StartCoroutine(AttemptToReachPlayer());
             movingToPlayer = false;
