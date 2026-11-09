@@ -12,11 +12,13 @@ public class Streets : MonoBehaviour
 	public Material streetMaterial;
 	private CellHandler cellHandler;
 
+
     private void Start()
     {
 		cellHandler = FindAnyObjectByType<CellHandler>();
         buildStreets(cellHandler.cells, thickness);
     }
+
 
     private void buildStreets(List<Cell> cells, float thickness)
 	{
@@ -58,6 +60,7 @@ public class Streets : MonoBehaviour
 		return mid + (midDirection * distance);
     }
 
+
 	private static Mesh getMesh(Vector2[] topVerticies)
 	{
         Vector3[] worldVerticies = new Vector3[topVerticies.Length];
@@ -82,7 +85,6 @@ public class Streets : MonoBehaviour
 		mesh.RecalculateNormals();
 		return mesh;
     }
-
 
 
 	public static void materializeCells(List<Cell> cells) // visualization purposes. 
