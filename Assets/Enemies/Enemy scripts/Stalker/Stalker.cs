@@ -29,6 +29,10 @@ namespace VirtualWorlds.FSM
         [SerializeField]
         private DamageConfigScriptableObject damageConfig;
 
+        [Header("Hideable layers")]
+        [SerializeField]
+        private LayerMask hideableLayers;
+
         [Header("Sensors")]
         [SerializeField]
         public PlayerSensor stalkSensor;
@@ -39,10 +43,14 @@ namespace VirtualWorlds.FSM
         [SerializeField]
         public GrabSensor grabSensor;
 
-        [Header("Attack Config")]
+        [Header("Hiding spot goodness.")]
         [SerializeField]
-        [Range(0.2f, 5f)]
-        private float AttackCooldown = 1;
+        [Range(-1, 1)]
+        [Tooltip("Lower sensitivity leads to a better hiding spot, less performant though.")]
+        private float hideSensitivity = 0;
+        [SerializeField]
+        [Tooltip("More potential colliders gives more hiding options - but is less performant")]
+        int numOfSpots = 10;
 
 
         [Space]
@@ -78,7 +86,7 @@ namespace VirtualWorlds.FSM
             // If it does, it cannot be interupttd, and needs to call StateCanExit before being permitted to exit.
             // if it doesn't (if it's false) it can be interrupted no problem.
             stalkerFSM.AddState(StalkerState.Idle, new StalkerIdleState(true, this, 2f));
-            stalkerFSM.AddState(StalkerState.Stalk, new StalkState(true, this, player));
+            stalkerFSM.AddState(StalkerState.Stalk, new StalkState(true, this, player, hideSensitivity, numOfSpots, hideableLayers));
             stalkerFSM.AddState(StalkerState.Chase, new StalkerChaseState(true, this, player));
             stalkerFSM.AddState(StalkerState.Attack, attackState);
 

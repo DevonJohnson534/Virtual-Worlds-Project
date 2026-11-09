@@ -28,6 +28,7 @@ namespace VirtualWorlds.FSM
         private Renderer HeadTransparency;
         private Renderer GlassesTransparency;
         private Renderer GlassTransparency;
+        private float originalSpeed;
 
         public StalkerAttackState(bool needsExitTime,
             Stalker stalker,
@@ -57,6 +58,8 @@ namespace VirtualWorlds.FSM
             //to move at a given destination, rather just move straight forward so it doesn't perfectly
             //track the player.  
             base.OnEnter();
+            originalSpeed = agent.speed;
+            agent.speed = agent.speed * 5;
             stalker.attackSensor.GetComponent<SphereCollider>().radius = 40f;
             stalker.grabSensor.SuccessfulAttack += OnTriggerEnter;
             stalker.grabSensor.GetComponent<BoxCollider>().enabled = false;
@@ -120,6 +123,7 @@ namespace VirtualWorlds.FSM
         public override void OnExit()
         {
             isFinishing = true;
+            agent.speed = originalSpeed;
             stalker.grabSensor.GetComponent<BoxCollider>().enabled = false;
             stalker.attackSensor.GetComponent<SphereCollider>().radius = 1.3f;
 

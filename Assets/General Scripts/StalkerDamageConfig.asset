@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageConfigScriptableObject
   DamageCurve:
     m_Mode: 1
-    m_CurveMultiplier: 10
+    m_CurveMultiplier: 75
     m_CurveMin:
       serializedVersion: 2
       m_Curve: []
