@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics.Metrics;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityHFSM;
 using VirtualWorlds.FSM;
@@ -29,6 +30,7 @@ namespace VirtualWorlds.FSM
         private Renderer GlassesTransparency;
         private Renderer GlassTransparency;
         private float originalSpeed;
+        private AudioSource audioSource;
 
         public StalkerAttackState(bool needsExitTime,
             Stalker stalker,
@@ -38,7 +40,8 @@ namespace VirtualWorlds.FSM
             Camera playerCamera,
             Renderer HeadTransparency,
             Renderer GlassesTransparency,
-            Renderer GlassTransparency) : base(needsExitTime, stalker)
+            Renderer GlassTransparency,
+            AudioSource audioSource) : base(needsExitTime, stalker)
         {
             this.target = target;
             this.ArmBone = ArmBone;
@@ -47,6 +50,7 @@ namespace VirtualWorlds.FSM
             this.HeadTransparency = HeadTransparency;
             this.GlassesTransparency = GlassesTransparency;
             this.GlassTransparency = GlassTransparency;
+            this.audioSource = audioSource;
         }
 
         public override void OnEnter()
@@ -59,7 +63,7 @@ namespace VirtualWorlds.FSM
             //track the player.  
             base.OnEnter();
             originalSpeed = agent.speed;
-            agent.speed = agent.speed * 5;
+            agent.speed = agent.speed * 10;
             stalker.attackSensor.GetComponent<SphereCollider>().radius = 40f;
             stalker.grabSensor.SuccessfulAttack += OnTriggerEnter;
             stalker.grabSensor.GetComponent<BoxCollider>().enabled = false;
@@ -208,6 +212,7 @@ namespace VirtualWorlds.FSM
             HeadTransparency.enabled = false;
             GlassesTransparency.enabled = false;
             GlassTransparency.enabled = false;
+            audioSource.PlayOneShot(stalker.hurtSound);
 
             while (!animator.GetCurrentAnimatorStateInfo(0).IsName("Big_attack_stab")) {
                 // Same stuff as above but with INTERPOLATION! Basically, Lerp (and its brother, LerpAngle, which is just Lerp but it loops back to 360 if it ever goes negative... so...

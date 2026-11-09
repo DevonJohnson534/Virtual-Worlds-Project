@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using VirtualWorlds.FSM;
+using System.Linq;
 
 namespace VirtualWorlds.FSM { 
 
@@ -80,7 +81,7 @@ public class StalkState : StalkerAttackBase
             // looking at the stalker's direction.
             Vector3 direction = (stalker.transform.position - target.transform.position).normalized;
             float dotProduct = Vector3.Dot(target.transform.forward, direction);
-            if (dotProduct + 0.1 >= Mathf.Cos(90))
+            if (dotProduct >= Mathf.Cos(90))
             {
                 return true;
             }
@@ -110,6 +111,12 @@ public class StalkState : StalkerAttackBase
 
             int hits = Physics.OverlapSphereNonAlloc(stalker.transform.position, stalker.stalkSensor.GetComponent<SphereCollider>().radius, spots, hideableLayers);
             System.Array.Sort(spots, SpotsSort);
+            if (!spots.Contains(target.GetComponent<CharacterController>()))
+            {
+                // Forces the Player collider to be in the array for logic reasons. 
+                spots[spots.Length - 1] = target.GetComponent<CharacterController>();
+                System.Array.Sort(spots, SpotsSort);
+            }
             for (int i = 0; i < spots.Length; ++i)
             {
                 Debug.Log(spots[i]);
@@ -143,10 +150,12 @@ public class StalkState : StalkerAttackBase
             {
                 Debug.Log($"Currently looking for positions around {spots[i].name}");
 
+                
+                //When working with the stalker, all things centers must be relative to their "ground" heights. Otherwise it tries to query the center 10 miles in the sky and breaks. 
                 //This checks if there's a valid navmesh position near it.
-                // That 10 there is the maxDistance - it's recommended you set it to double the height
+                // That 10 there is the maxDistance - that's the maximum amount outwards the agent's allowed to query. it's recommended you set it to double the height
                 // of your agent.
-                if (NavMesh.SamplePosition(spots[i].transform.position, out NavMeshHit hit, 10f, stalker.GetComponent<NavMeshAgent>().areaMask))
+                if (NavMesh.SamplePosition(spots[i].transform.position, out NavMeshHit hit, 22f, stalker.GetComponent<NavMeshAgent>().areaMask))
                 {
                     // We do this so we can use our hits normal, because we wanna know if it's
                     // facing the player or facing away. We're doubling this as an error check
@@ -163,8 +172,8 @@ public class StalkState : StalkerAttackBase
                     }
                     else
                     {
-                        
-                        if (NavMesh.SamplePosition(spots[i].transform.position - (target.transform.position - hit.position).normalized * 5, out NavMeshHit hit2, 10f, stalker.GetComponent<NavMeshAgent>().areaMask))
+                        // 22 here represents amount of distance teh stalkers allowed to retry his searching at. 22 is here because the scale of the buildings is 20. 
+                        if (NavMesh.SamplePosition(spots[i].transform.position - (target.transform.position - hit.position).normalized * 22, out NavMeshHit hit2, 10f, stalker.GetComponent<NavMeshAgent>().areaMask))
                         {
                             // This redo is pretty much just to say "Hey, did we grab a position that's FACING the player? Let's try again,
                             // maybe it won't be if we go in the opposite direction of the original hit. 
@@ -240,6 +249,13 @@ public class StalkState : StalkerAttackBase
             }
             else
             {
+                //To normalize for things like the buildings and such that have high centers of transform. 
+                //Otherwise they're rarely considered "closest." Though it would work better for more verticality if 
+                //this were reverted - for now it's important. 
+                Vector3 flatA = new Vector3(A.transform.position.x, 0f, A.transform.position.z);
+                Vector3 flatB = new Vector3(B.transform.position.x, 0f, B.transform.position.z);
+
+
                 // If this dot product is negative, they're in opposite directions relative to the stalker
                 // If the dot product is positive, they're both in the same direction.
                 // We care cuz we want the stalker toward the player at all times. 
@@ -264,7 +280,7 @@ public class StalkState : StalkerAttackBase
                 }
                 else
                 {
-                    return Vector3.Distance(stalker.transform.position, A.transform.position).CompareTo(Vector3.Distance(stalker.transform.position, B.transform.position));
+                    return Vector3.Distance(stalker.transform.position, flatA).CompareTo(Vector3.Distance(stalker.transform.position, flatB));
                 }
             }
 
@@ -326,7 +342,7 @@ public class StalkState : StalkerAttackBase
             yield return new WaitForSeconds(3f);
             while (BeingLookedAt())
             {
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(0.5f);
             }
         }
     }   

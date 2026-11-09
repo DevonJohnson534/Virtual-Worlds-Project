@@ -66,6 +66,11 @@ namespace VirtualWorlds.FSM
         [SerializeField]
         private bool isTransitioning = false;
 
+        private AudioSource audioSource;
+        [Header("Sound effects")]
+        [SerializeField]
+        public AudioClip hurtSound;
+
 
 
         private StateMachine<StalkerState, StalkerEvent> stalkerFSM;
@@ -76,11 +81,12 @@ namespace VirtualWorlds.FSM
 
         void Awake()
         {
+            audioSource = GetComponent<AudioSource>();
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
             stalkerFSM = new StateMachine<StalkerState, StalkerEvent>();
             attackState = new StalkerAttackState(true, this, playerInput, ArmBone: ArmBone, damageConfig: damageConfig, playerCamera: playerCamera, 
-                HeadTransparency: HeadTransparency, GlassesTransparency: GlassesTransparency, GlassTransparency: GlassTransparency);
+                HeadTransparency: HeadTransparency, GlassesTransparency: GlassesTransparency, GlassTransparency: GlassTransparency, audioSource: audioSource);
 
             // In the states, the first argument is whether or not it can be interuptted, it has exit time.
             // If it does, it cannot be interupttd, and needs to call StateCanExit before being permitted to exit.
