@@ -17,11 +17,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
-      propertyPath: zPlusEdge
+      propertyPath: zPlusOpen
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
-      propertyPath: xMinusEdge
+      propertyPath: xMinusOpen
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
@@ -29,16 +29,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
-      propertyPath: zMinusEdge
+      propertyPath: zMinusOpen
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1064293165804504076, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1129383537059450616, guid: d4e15fe537496d746abde57750e88f42, type: 3}
+      objectReference: {fileID: -629719859055844128, guid: 2a29ce59b19b28a42a107b1b3fb7ec3a, type: 3}
     - target: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Name
-      value: StairsOpen
+      value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -87,18 +87,18 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2155924951143564643}
+      addedObject: {fileID: -2981663025238893563}
     - targetCorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -4426169921380367916}
+      addedObject: {fileID: -8039004255516008022}
   m_SourcePrefab: {fileID: 100100000, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
 --- !u!1 &3433562885878130443 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
   m_PrefabInstance: {fileID: 8930744734627676924}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &2155924951143564643
-MeshCollider:
+--- !u!65 &-2981663025238893563
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -115,11 +115,10 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4104380202958562290, guid: 0810bca5059c19a439475b79a130f715, type: 3}
---- !u!114 &-4426169921380367916
+  serializedVersion: 3
+  m_Size: {x: 2, y: 0.20000005, z: 2}
+  m_Center: {x: 0, y: -0.9, z: 0}
+--- !u!114 &-8039004255516008022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,15 +131,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
   edges:
-  - edgeName: 19
-    rot: 0
-  - edgeName: 9
+  - edgeName: 6
     rot: -1
-  - edgeName: 7
-    rot: 1
-  - edgeName: 20
-    rot: 1
-  - edgeName: 14
-    rot: 2
-  - edgeName: 7
-    rot: 0
+  - edgeName: 4
+    rot: -1
+  - edgeName: 6
+    rot: -1
+  - edgeName: 6
+    rot: -1
+  - edgeName: 0
+    rot: -1
+  - edgeName: 6
+    rot: -1
+  emptyEdgeOverrides: 000000000000y

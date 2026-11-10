@@ -74,7 +74,6 @@ namespace BuildingGen {
 						tileProto.edges[i] = new EdgeInfo(0, -1);
 					}
 				}
-
 				EditorUtility.SetDirty(tileProto); //this means that changes made to the prefab's TilePrototype can be saved
 			}
 

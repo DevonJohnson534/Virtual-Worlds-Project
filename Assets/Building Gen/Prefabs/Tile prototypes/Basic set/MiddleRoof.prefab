@@ -35,10 +35,10 @@ PrefabInstance:
     - target: {fileID: 1064293165804504076, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -8970150954611721432, guid: d4e15fe537496d746abde57750e88f42, type: 3}
+      objectReference: {fileID: -7172326212093547444, guid: 2a29ce59b19b28a42a107b1b3fb7ec3a, type: 3}
     - target: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Name
-      value: StairsEndByWall
+      value: MiddleRoof
       objectReference: {fileID: 0}
     - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -132,15 +132,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
   edges:
-  - edgeName: 18
-    rot: 1
-  - edgeName: 9
+  - edgeName: 7
     rot: -1
-  - edgeName: 12
+  - edgeName: 0
     rot: -1
   - edgeName: 7
-    rot: 0
-  - edgeName: 14
-    rot: 3
-  - edgeName: 6
     rot: -1
+  - edgeName: 7
+    rot: -1
+  - edgeName: 4
+    rot: -1
+  - edgeName: 7
+    rot: -1
+  emptyEdgeOverrides: 000000000000y

@@ -177,3 +177,4 @@ MonoBehaviour:
     rot: 0
   - edgeName: 0
     rot: 0
+  emptyEdgeOverrides: 000000000000y
