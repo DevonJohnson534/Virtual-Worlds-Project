@@ -68,6 +68,7 @@ namespace BuildingGen
 			{
 				t.ConsiderNeighboring(magicTile);
 			}
+			magicTile.ConsiderNeighboring(magicTile);
 		}
 
 		private void Cleanup()
@@ -119,7 +120,7 @@ namespace BuildingGen
 							c.possibleTiles.Add(magicTile);
 						}
 
-						else if (c.possibleTiles.Count < currentE) //new lowest entropy found //TODO remove the else here to have more magic tiles instantiated? fix bug
+						if (c.possibleTiles.Count < currentE) //new lowest entropy found
 						{
 							currentE = c.possibleTiles.Count;
 							currentCords = new List<Vector3Int> { new Vector3Int(x, y, z) };
@@ -178,6 +179,7 @@ namespace BuildingGen
 			//    For every cell that got updated, return its neighbors so they can also get checked
 
 			List<Tile> possibleAtCords = cells[cords.x, cords.y, cords.z].possibleTiles;
+			if (possibleAtCords.Count == 0) return new List<Vector3Int>(); // don't update any neighbors because theres a magic tile
 
 			Vector3Int[] neighborDirs = { new Vector3Int(1, 0, 0), new Vector3Int(-1, 0, 0),
 												new Vector3Int(0, 1, 0), new Vector3Int(0, -1, 0),
