@@ -26,8 +26,11 @@ MonoBehaviour:
     m_path: Assets/Scenes/MainMenu.unity
     m_guid: 30fff551bad6f9743ac1de94eb1d1480
   - m_enabled: 1
-    m_path: Assets/Scenes/DemoScene.unity
+    m_path: Assets/Scenes/BaseGenAndEnemyTest.unity
     m_guid: e9ef79a74de89b04c9d8baf433c46cd2
+  - m_enabled: 1
+    m_path: Assets/Scenes/StalkerTest.unity
+    m_guid: b02f667147977664bb886731bc35c6fd
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:

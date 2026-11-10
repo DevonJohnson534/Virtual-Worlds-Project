@@ -15,4 +15,4 @@ namespace VitrualWorlds.FSM
             animator.Play("Idle");
         }
     }
-}
+} 

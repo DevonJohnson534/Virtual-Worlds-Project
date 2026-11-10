@@ -91,6 +91,7 @@ namespace VirtualWorlds.FSM
 
         private void Start()
         {
+            //The plus equals sign pretty much indicatest that the sensor is listening for the event triggers onPlayerEnter and onPlayerExit.
             chasePlayerSensor.onPlayerEnter += chasePlayerSensor_OnPlayerEnter;
             chasePlayerSensor.onPlayerExit += chasePlayerSensor_OnPlayerExit;
 
