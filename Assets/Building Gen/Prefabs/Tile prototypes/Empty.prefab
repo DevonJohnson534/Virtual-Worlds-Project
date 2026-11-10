@@ -64,6 +64,30 @@ PrefabInstance:
       propertyPath: 'yPlusEdges.Array.data[0]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: edges.Array.data[0].rot
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: edges.Array.data[1].rot
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: edges.Array.data[2].rot
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: edges.Array.data[3].rot
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: edges.Array.data[4].rot
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      propertyPath: edges.Array.data[5].rot
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 1064293165804504076, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -140,27 +164,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
-  yPlusEdge:
-    edgeName: 0
-    symmetric: 0
-    rotIndex: 0
-  yMinusEdge:
-    edgeName: 0
-    symmetric: 0
-    rotIndex: 0
-  zPlusEdge:
-    edgeName: 0
-    symmetric: 0
-    flipped: 0
-  zMinusEdge:
-    edgeName: 0
-    symmetric: 0
-    flipped: 0
-  xPlusEdge:
-    edgeName: 0
-    symmetric: 0
-    flipped: 0
-  xMinusEdge:
-    edgeName: 0
-    symmetric: 0
-    flipped: 0
+  edges:
+  - edgeName: 0
+    rot: 0
+  - edgeName: 0
+    rot: 0
+  - edgeName: 0
+    rot: 0
+  - edgeName: 0
+    rot: 0
+  - edgeName: 0
+    rot: 0
+  - edgeName: 0
+    rot: 0

@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 4c60df733197b0f4e9537e5ff7fd358c
+guid: d4e15fe537496d746abde57750e88f42
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: concrete simple
-    second: {fileID: 2100000, guid: 9b02b10bd841a1e479af0751505639a9, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -102,7 +97,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.01
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

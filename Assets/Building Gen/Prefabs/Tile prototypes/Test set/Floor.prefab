@@ -35,7 +35,7 @@ PrefabInstance:
     - target: {fileID: 1064293165804504076, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -629719859055844128, guid: e52d3a2a1ba4eec4a8700f44f03b029c, type: 3}
+      objectReference: {fileID: -629719859055844128, guid: d4e15fe537496d746abde57750e88f42, type: 3}
     - target: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Name
       value: Floor
@@ -130,27 +130,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
-  yPlusEdge:
-    edgeName: 0
-    symmetric: 0
-    rotIndex: 0
-  yMinusEdge:
-    edgeName: 4
-    symmetric: 0
-    rotIndex: 0
-  zPlusEdge:
-    edgeName: 5
-    symmetric: 0
-    flipped: 0
-  zMinusEdge:
-    edgeName: 5
-    symmetric: 0
-    flipped: 0
-  xPlusEdge:
-    edgeName: 5
-    symmetric: 0
-    flipped: 0
-  xMinusEdge:
-    edgeName: 5
-    symmetric: 0
-    flipped: 0
+  edges:
+  - edgeName: 12
+    rot: -1
+  - edgeName: 9
+    rot: -1
+  - edgeName: 12
+    rot: -1
+  - edgeName: 12
+    rot: -1
+  - edgeName: 0
+    rot: -1
+  - edgeName: 12
+    rot: -1

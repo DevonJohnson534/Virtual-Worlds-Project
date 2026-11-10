@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace BuildingGen
 {
-	//[RequireComponent(typeof(NavMeshSurface))]
 	public class BuildingGenerator : MonoBehaviour
 	{
 		public Vector3Int dimensions;
@@ -31,7 +28,6 @@ namespace BuildingGen
 				{
 					generating = false;
 					Cleanup();
-					//GetComponent<NavMeshSurface>().BuildNavMesh(); //TODO coroutine? also, should this be per building or what
 					Debug.Log("Generation complete");
 				}
 				else
@@ -119,11 +115,11 @@ namespace BuildingGen
 						if (c.collapsed == true) continue; //skip collapsed cells
 						else if (c.possibleTiles.Count == 0) //avoid impossible collapses by adding the magic tile
 						{
-							Debug.Log("possible tiles is zero, but not collapsed. adding special tile.");
+							Debug.Log("possible tiles is zero, but not collapsed. adding magic tile.");
 							c.possibleTiles.Add(magicTile);
 						}
 
-						else if (c.possibleTiles.Count < currentE) //new lowest entropy found
+						else if (c.possibleTiles.Count < currentE) //new lowest entropy found //TODO remove the else here to have more magic tiles instantiated? fix bug
 						{
 							currentE = c.possibleTiles.Count;
 							currentCords = new List<Vector3Int> { new Vector3Int(x, y, z) };
@@ -186,15 +182,15 @@ namespace BuildingGen
 			Vector3Int[] neighborDirs = { new Vector3Int(1, 0, 0), new Vector3Int(-1, 0, 0),
 												new Vector3Int(0, 1, 0), new Vector3Int(0, -1, 0),
 												new Vector3Int(0, 0, 1), new Vector3Int(0, 0, -1)};
-			HashSet<Tile>[] validNeighborsOrdered = new HashSet<Tile>[6] { new(), new(), new(), new(), new(), new() }; //TODO fix...
+			HashSet<Tile>[] validNeighborsOrdered = new HashSet<Tile>[6] { new(), new(), new(), new(), new(), new() }; //TODO improve syntax...
 			foreach (Tile t in possibleAtCords)
 			{
-				validNeighborsOrdered[0].UnionWith(t.xPlusNeighbors);
-				validNeighborsOrdered[1].UnionWith(t.xMinusNeighbors);
-				validNeighborsOrdered[2].UnionWith(t.yPlusNeighbors);
-				validNeighborsOrdered[3].UnionWith(t.yMinusNeighbors);
-				validNeighborsOrdered[4].UnionWith(t.zPlusNeighbors);
-				validNeighborsOrdered[5].UnionWith(t.zMinusNeighbors);
+				validNeighborsOrdered[0].UnionWith(t.neighbors[Directions.X_POS]);
+				validNeighborsOrdered[1].UnionWith(t.neighbors[Directions.X_NEG]);
+				validNeighborsOrdered[2].UnionWith(t.neighbors[Directions.Y_POS]);
+				validNeighborsOrdered[3].UnionWith(t.neighbors[Directions.Y_NEG]);
+				validNeighborsOrdered[4].UnionWith(t.neighbors[Directions.Z_POS]);
+				validNeighborsOrdered[5].UnionWith(t.neighbors[Directions.Z_NEG]);
 			}
 
 			List<Vector3Int> impactedCords = new List<Vector3Int>();

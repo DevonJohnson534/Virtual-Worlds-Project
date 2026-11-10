@@ -103,27 +103,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
-  yPlusEdge:
-    edgeName: 2
-    symmetric: 0
-    rotIndex: 0
-  yMinusEdge:
-    edgeName: 3
-    symmetric: 0
-    rotIndex: 0
-  zPlusEdge:
-    edgeName: 2
-    symmetric: 0
-    flipped: 0
-  zMinusEdge:
-    edgeName: 2
-    symmetric: 0
-    flipped: 0
-  xPlusEdge:
-    edgeName: 2
-    symmetric: 0
-    flipped: 0
-  xMinusEdge:
-    edgeName: 2
-    symmetric: 0
-    flipped: 0
+  edges:
+  - edgeName: 3
+    rot: 0
+  - edgeName: 5
+    rot: 0
+  - edgeName: 3
+    rot: 0
+  - edgeName: 3
+    rot: 0
+  - edgeName: 4
+    rot: 0
+  - edgeName: 3
+    rot: 0
