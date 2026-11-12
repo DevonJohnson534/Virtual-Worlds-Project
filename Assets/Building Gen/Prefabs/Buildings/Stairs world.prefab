@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: dimensions.x
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: dimensions.y
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: dimensions.z
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: magicTilePrototype
@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8785336230644452318, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
