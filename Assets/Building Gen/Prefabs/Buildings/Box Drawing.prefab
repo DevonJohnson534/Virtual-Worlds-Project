@@ -21,6 +21,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: useBoundaries
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: tilePrototypes.Array.size
       value: 8
       objectReference: {fileID: 0}

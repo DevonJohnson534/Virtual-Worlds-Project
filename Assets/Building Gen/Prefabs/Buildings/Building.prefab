@@ -48,3 +48,4 @@ MonoBehaviour:
   tileSize: {x: 2, y: 2, z: 2}
   tilePrototypes: []
   magicTilePrototype: {fileID: 897309065854651706, guid: e28a15960b4cfcc4ebbd367af567bd7f, type: 3}
+  airTilePrototype: {fileID: 2293330809889163253, guid: 4183c1dfd69eb9241a3ea674c51f621e, type: 3}

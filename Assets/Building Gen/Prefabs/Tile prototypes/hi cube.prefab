@@ -104,15 +104,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
   edges:
-  - edgeName: 19
+  - edgeName: 25
     rot: 0
-  - edgeName: 21
+  - edgeName: 27
     rot: 0
-  - edgeName: 19
+  - edgeName: 25
     rot: 0
-  - edgeName: 19
+  - edgeName: 25
     rot: 0
-  - edgeName: 20
+  - edgeName: 26
     rot: 0
-  - edgeName: 19
+  - edgeName: 25
     rot: 0

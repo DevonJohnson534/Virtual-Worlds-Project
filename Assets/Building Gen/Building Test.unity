@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TestBuildingInstantiate
   building: {fileID: 7480915884307826901, guid: 7a39d4c4500a7064aaaeafe707446d04, type: 3}
+  dimensions: {x: 5, y: 5, z: 5}
 --- !u!1 &793193241
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fd9474fa9e78d4ba50beb80b5a8522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TestBuildingInstantiate
-  building: {fileID: 4614972423873105762, guid: 85ef38fe621dafb41b9494f2cf3167ba, type: 3}
+  building: {fileID: 4614972423873105762, guid: 7ce85c26b25c69843b9febd847a42fd5, type: 3}
+  dimensions: {x: 8, y: 8, z: 8}
 --- !u!4 &793193243
 Transform:
   m_ObjectHideFlags: 0

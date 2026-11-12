@@ -120,12 +120,11 @@ MonoBehaviour:
     rot: -1
   - edgeName: 0
     rot: -1
-  - edgeName: 15
+  - edgeName: 29
     rot: -1
-  - edgeName: 15
-    rot: -1
-  - edgeName: 0
+  - edgeName: 29
     rot: -1
   - edgeName: 0
     rot: -1
-  emptyEdgeOverrides: 000000000000y
+  - edgeName: 0
+    rot: -1
