@@ -144,4 +144,3 @@ MonoBehaviour:
     rot: 2
   - edgeName: 11
     rot: 0
-  emptyEdgeOverrides: 000000000000y

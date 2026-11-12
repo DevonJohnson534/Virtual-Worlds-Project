@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6380487524746895757
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: tileSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: tileSize.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: tileSize.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: dimensions.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: dimensions.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: dimensions.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: useBoundaries
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: airTilePrototype
+      value: 
+      objectReference: {fileID: 2293330809889163253, guid: 4183c1dfd69eb9241a3ea674c51f621e, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: magicTilePrototype
+      value: 
+      objectReference: {fileID: 897309065854651706, guid: e28a15960b4cfcc4ebbd367af567bd7f, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: tilePrototypes.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[0]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 97199ab14fb633c409a571e1ff361c39, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[1]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: c78ce8cc54dcbe04b9956dec0bfea2a7, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[2]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 88f71a39d882b00449d84da61babbc29, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[3]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 6512ab0c9158a2f4388c85a71c153d8b, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[4]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: a6946880fda60ad4582426bdbf543d5e, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[5]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: f86b5e91e0de3734586586a1a4f5a18d, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[6]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 4049d0745bbe8aa48b298cfcd9f91b14, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[7]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 8b6facc0af489944daadf942cb7ed53d, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[8]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: c4c26e6dd7cfab64ebfdcd0dfa731c2f, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[9]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 64d30794d1620c54ebe039192a05c731, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[10]'
+      value: 
+      objectReference: {fileID: 2293330809889163253, guid: 4183c1dfd69eb9241a3ea674c51f621e, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[11]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 87b5f03e68f083a4993995e893ddcf7f, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[12]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 0fa265c75caa0764cb45ba0850c6ea90, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[13]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: bdebcc0f46ef2df47b7b69a183a74bd8, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[14]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 1cff5af8d7dbc594b92c3d8139b495ec, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[15]'
+      value: 
+      objectReference: {fileID: -2007500165634898679, guid: 91e46d154f52230498260130b8dd14f4, type: 3}
+    - target: {fileID: 4065848141441655881, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: m_Name
+      value: Boundary World
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785336230644452318, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785336230644452318, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}

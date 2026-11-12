@@ -133,14 +133,13 @@ MonoBehaviour:
   edges:
   - edgeName: 0
     rot: -1
-  - edgeName: 16
+  - edgeName: 30
     rot: -1
   - edgeName: 0
     rot: -1
   - edgeName: 0
     rot: -1
-  - edgeName: 16
+  - edgeName: 30
     rot: -1
   - edgeName: 0
     rot: -1
-  emptyEdgeOverrides: 000000000000y
