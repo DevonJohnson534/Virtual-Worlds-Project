@@ -9,11 +9,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
-      propertyPath: xPlusEdge
+      propertyPath: xPlusOpen
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
-      propertyPath: yPlusEdge
+      propertyPath: yPlusOpen
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7488395375057882359, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
@@ -35,22 +35,10 @@ PrefabInstance:
     - target: {fileID: 1064293165804504076, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+      objectReference: {fileID: 7268854221258926813, guid: 2a29ce59b19b28a42a107b1b3fb7ec3a, type: 3}
     - target: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_Name
-      value: Cube
-      objectReference: {fileID: 0}
-    - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2
+      value: Stairs
       objectReference: {fileID: 0}
     - target: {fileID: 6881693138722090964, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -92,21 +80,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2007500165634898679, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -7389041051519541252}
+      addedObject: {fileID: 2155924951143564643}
+    - targetCorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4426169921380367916}
   m_SourcePrefab: {fileID: 100100000, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
 --- !u!1 &3433562885878130443 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6077069230133962231, guid: e2736642180e7674cb2603f7ed4d6d91, type: 3}
   m_PrefabInstance: {fileID: 8930744734627676924}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &-7389041051519541252
-BoxCollider:
+--- !u!64 &2155924951143564643
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -123,6 +115,33 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4104380202958562290, guid: 0810bca5059c19a439475b79a130f715, type: 3}
+--- !u!114 &-4426169921380367916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433562885878130443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d8be571305f8b4caad2a92394a6aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingGen.TilePrototype
+  edges:
+  - edgeName: 1
+    rot: -1
+  - edgeName: 4
+    rot: -1
+  - edgeName: 11
+    rot: 1
+  - edgeName: 6
+    rot: -1
+  - edgeName: 8
+    rot: 2
+  - edgeName: 11
+    rot: 0
+  emptyEdgeOverrides: 000000000000y

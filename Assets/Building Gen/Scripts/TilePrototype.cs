@@ -4,13 +4,13 @@ namespace BuildingGen
 {
 	public class TilePrototype : MonoBehaviour
 	{
-		public int yPlusEdge;
-		public int yMinusEdge;
-
-		public int zPlusEdge;
-		public int zMinusEdge;
-
-		public int xPlusEdge;
-		public int xMinusEdge;
+		[Header("Edge order: " +
+			"\n0 = X_NEG" +
+			"\n1 = Y_NEG" +
+			"\n2 = Z_NEG" +
+			"\n3 = X_POS" +
+			"\n4 = Y_POS" +
+			"\n5 = Z_POS")]
+		public EdgeInfo[] edges = new EdgeInfo[6];
 	}
 }
