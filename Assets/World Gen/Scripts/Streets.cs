@@ -6,7 +6,7 @@ using Voronoi;
 using System.Collections.Generic;
 
 
-public class Streets : MonoBehaviour
+public class Streets
 {
 	public List<Cell> streetCells;
 	public Material streetMaterial;
