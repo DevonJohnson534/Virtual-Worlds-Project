@@ -21,10 +21,7 @@ public class CellHandler : MonoBehaviour
 
         Streets streets = new Streets(StreetThickness, streetMaterial);
         List<Cell> streetCells = streets.buildStreets(cells);
-
-        BuildingPlacement.plotBuildings(streetCells);
-
-
+        //BuildingPlacement.plotBuildings(streetCells);
 
     }
 }

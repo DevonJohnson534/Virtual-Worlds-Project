@@ -141,32 +141,50 @@ public class BuildingPlacement
 		corners[0] = longest.start + (direction * lengthFraction);
 		corners[1] = longest.end - (direction * lengthFraction);
 
-		Line fromStart = new Line(corners[0], corners[0]  + (perpendicular * longest.getLength()));	
-		Line fromEnd = new Line(corners[1], corners[1]  + (perpendicular * longest.getLength()));	
+		Line fromStart = new Line(corners[0], corners[0]  + (perpendicular * 2 * longest.getLength()));	
+		Line fromEnd = new Line(corners[1], corners[1]  + (perpendicular * 2 * longest.getLength()));
+
+		fromStart.end = shortenToIntersection(boundaries, longestIndex, fromStart).Value;
+		fromEnd.end = shortenToIntersection(boundaries, longestIndex, fromEnd).Value;
 
 
-		if(fromStart.getLength() >= fromEnd.getLength())
+
+        if (fromStart.getLength() <= fromEnd.getLength())
 		{
 			corners[3] = fromStart.end;
-			Line hypotenuse = new Line(corners[1], corners[3]);
-
-
-			
-
+			corners[2] = fromEnd.intersection(new Line(corners[3], corners[3] + (direction * longest.getLength()))).Value;
 		}
-		else
-		{
-			
-		}
+        else if (fromStart.getLength() < fromEnd.getLength())
+        {
+            corners[2] = fromEnd.end;
+            corners[3] = fromStart.intersection(new Line(corners[2], corners[2] + (direction * longest.getLength()))).Value;
+        }
 
 
-		foreach(Vector2 v in corners)
+        foreach (Vector2 v in corners)
 		{
 			Debug.Log(v);
 		}
 
 		return new Cell(corners);
 	}
+
+
+	private static Vector2? shortenToIntersection(Line[] boundaries, int skip, Line line)
+	{
+        for (int i = skip + 1; i < boundaries.Length + skip; i++)
+        {
+            int index = i % boundaries.Length;
+
+            Vector2? intersection = line.intersection(boundaries[index]);
+
+            if (intersection.HasValue)
+            {
+                return intersection;
+            }
+        }
+		return null;
+    }
 
 
 	private float cosineSimilarity(Vector2 u, Vector2 v)

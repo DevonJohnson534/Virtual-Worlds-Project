@@ -11,7 +11,6 @@ public class Streets : MonoBehaviour
 	public List<Cell> streetCells;
 	public Material streetMaterial;
 	public float thickness = 4f;
-	private CellHandler cellHandler;
 
 	public Streets(float thickness, Material streetMaterial)
 	{
