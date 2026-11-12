@@ -18,9 +18,6 @@ public class Streets
 		this.streetMaterial = streetMaterial;
 	}
 
-
-
-
     public List<Cell> buildStreets(List<Cell> cells)
 	{
 		int count = 0;

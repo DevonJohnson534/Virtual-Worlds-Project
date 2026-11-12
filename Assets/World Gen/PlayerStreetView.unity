@@ -119,50 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &526020433
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 526020435}
-  - component: {fileID: 526020434}
-  m_Layer: 0
-  m_Name: BuildingPlacement
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &526020434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 526020433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e27a1f7a2d7cf5b709704628952fe98f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BuildingPlacement
---- !u!4 &526020435
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 526020433}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -158.66643, y: -0.09992, z: -221.78357}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &853859048
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,10 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8f484edcecfd7442b90608559a282b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CellHandler
-  boundDistance: 300
-  numberOfCells: 150
+  boundDistance: 200
+  numberOfCells: 120
   minDistance: 20
-  StreetThickness: 4
+  StreetThickness: 5
   streetMaterial: {fileID: 2100000, guid: 9b02b10bd841a1e479af0751505639a9, type: 2}
 --- !u!4 &853859050
 Transform:
@@ -207,54 +163,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 20.19568, y: 0, z: 12.70156}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1146607155
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1146607157}
-  - component: {fileID: 1146607156}
-  m_Layer: 0
-  m_Name: demoBuilder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1146607156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146607155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cb8a708d4ff7024a915bff5ca7c88c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::demoBuilder
-  prefabs:
-  - {fileID: 4065848141441655881, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
-  - {fileID: 6452382789761120258, guid: c6222e658220a6c40bef3d8468e9f695, type: 3}
-  - {fileID: 6381807921675756077, guid: ebcbdaeedd59766418fb8cb9e3ead813, type: 3}
---- !u!4 &1146607157
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146607155}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.89599, y: -0.1, z: 1.34188}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -369,6 +277,55 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 100, y: 1, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1420057695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1420057697}
+  - component: {fileID: 1420057696}
+  m_Layer: 0
+  m_Name: demoBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1420057696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420057695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb8a708d4ff7024a915bff5ca7c88c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::demoBuilder
+  prefabs:
+  - {fileID: 5132662550869475955, guid: 7a39d4c4500a7064aaaeafe707446d04, type: 3}
+  - {fileID: 4065848141441655881, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+  - {fileID: 6980791417498387908, guid: 85ef38fe621dafb41b9494f2cf3167ba, type: 3}
+  - {fileID: 5132662550869475955, guid: 7a39d4c4500a7064aaaeafe707446d04, type: 3}
+--- !u!4 &1420057697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420057695}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.09389, y: -0.1, z: 0.51248}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -571,7 +528,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1833036620}
   - {fileID: 853859050}
-  - {fileID: 526020435}
   - {fileID: 1158080952}
   - {fileID: 1499114017}
-  - {fileID: 1146607157}
+  - {fileID: 1420057697}
