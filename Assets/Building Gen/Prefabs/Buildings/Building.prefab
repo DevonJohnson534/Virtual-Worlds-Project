@@ -45,4 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingGenerator
   dimensions: {x: 0, y: 0, z: 0}
-  cells: []
+  tileSize: {x: 2, y: 2, z: 2}
+  tilePrototypes: []
+  magicTilePrototype: {fileID: 897309065854651706, guid: e28a15960b4cfcc4ebbd367af567bd7f, type: 3}
