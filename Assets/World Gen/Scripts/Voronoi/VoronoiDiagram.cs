@@ -14,25 +14,20 @@ namespace Voronoi
         }
         public List<Cell> getCells(List<Vector2> points)
         {
-            Cell limits = new Cell();
-            limits.boundaries = new Line[4];// no voroni outside this space. a square for now
-            Vector2 corner1 = new Vector2(-limit, -limit); //turn into a fucniton later probably.
-            Vector2 corner2 = new Vector2(-limit, limit);
-            Vector2 corner3 = new Vector2(limit, limit);
-            Vector2 corner4 = new Vector2(limit, -limit);
+            Vector2[] corners = new Vector2[4]; // big square
 
-            limits.boundaries[0] = new Line(corner1, corner2);
-            limits.boundaries[1] = new Line(corner2, corner3);
-            limits.boundaries[2] = new Line(corner3, corner4);
-            limits.boundaries[3] = new Line(corner4, corner1);
-            limits.center = points[0];
+            corners[0] = new Vector2(-limit, -limit);
+            corners[1] = new Vector2(-limit, limit);
+            corners[2] = new Vector2(limit, limit);
+            corners[3] = new Vector2(limit, -limit);
+
+            Cell limits = new Cell(corners, points[0]);
 
             List<Cell> cells = new List<Cell>(points.Count);
 
-            int completed = 0;
             foreach (Vector2 currentPoint in points)
             {
-                Cell cell = new Cell { boundaries = limits.boundaries };
+                Cell cell = new Cell(limits.boundaries, currentPoint);
 
                 foreach (Vector2 point in points)
                 {
@@ -57,8 +52,8 @@ namespace Voronoi
                     for (int i = 0; i < cell.boundaries.Length; i++)
                     {
                         Line cellBoundary = cell.boundaries[i];
-                        Vector2? firstIntersection = intersect(bisector, cellBoundary);
-                        Vector2? secondIntersection = intersect(bisector, cellBoundary);
+                        Vector2? firstIntersection = bisector.intersection(cellBoundary);
+                        Vector2? secondIntersection = bisector.intersection(cellBoundary);
 
                         if (firstIntersection.HasValue)
                         {
@@ -81,7 +76,7 @@ namespace Voronoi
 
                         int split1 = intersectedIndicies[0];
                         int split2 = intersectedIndicies[1];
-                        Cell subCell = new Cell { boundaries = splitCell(newSegment, cell, split1, split2, true) };
+                        Cell subCell = new Cell(splitCell(newSegment, cell, split1, split2, true));
 
                         if (inCell(currentPoint, subCell))
                         {
@@ -93,7 +88,6 @@ namespace Voronoi
                         }
                     }
                 }
-                cell.center = currentPoint;
                 cells.Add(cell);
             }
 
@@ -115,12 +109,12 @@ namespace Voronoi
 
             for (int i = 0; i < cell.boundaries.Length; i++)
             {
-                if (onLine(point, cell.boundaries[i]))
+                if (cell.boundaries[i].onLine(point))
                 {
                     return true;
                 }
 
-                if (intersect(ray, cell.boundaries[i]).HasValue)
+                if (ray.intersection(cell.boundaries[i]).HasValue)
                 {
                     crosses += 1;
                     if (crosses > 1)
@@ -172,65 +166,6 @@ namespace Voronoi
             }
 
             return new Line(b.end, b.start);
-        }
-
-
-
-        private bool onLine(Vector2 point, Line line)
-        {
-            float a1 = line.start.y - line.end.y;
-            float b1 = line.end.x - line.start.x;
-            float c1 = a1 * line.start.x + b1 * line.start.y;
-
-            if (Mathf.Abs(Mathf.Abs(c1) - Mathf.Abs(a1 * point.x + b1 * point.y)) <= 0.001)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-
-        private Vector2? intersect(Line a, Line b)
-        {
-            float a1 = a.start.y - a.end.y;
-            float b1 = a.end.x - a.start.x;
-            float c1 = a1 * a.start.x + b1 * a.start.y;
-
-            float a2 = b.start.y - b.end.y;
-            float b2 = b.end.x - b.start.x;
-            float c2 = a2 * b.start.x + b2 * b.start.y;
-
-            float det = (a1 * b2) - (a2 * b1);
-
-            if (det == 0)
-            {
-                return null;
-            }
-
-            float x = (b2 * c1 - b1 * c2) / det;
-            float y = (a1 * c2 - a2 * c1) / det;
-            Vector2 intersection = new Vector2(x, y);
-
-            bool isInBounds = inBounds(intersection, a) && inBounds(intersection, b);
-
-            if (isInBounds)
-            {
-                return intersection;
-            }
-            return null;
-        }
-
-
-        private bool inBounds(Vector2 point, Line line)
-        {
-            float error = 0.001f;
-            float minX = Mathf.Min(line.end.x, line.start.x) - error;
-            float maxX = Mathf.Max(line.end.x, line.start.x) + error;
-            float minY = Mathf.Min(line.end.y, line.start.y) - error;
-            float maxY = Mathf.Max(line.end.y, line.start.y) + error;
-
-            return (point.x >= minX && point.x <= maxX) && (point.y >= minY && point.y <= maxY);
         }
 
     }

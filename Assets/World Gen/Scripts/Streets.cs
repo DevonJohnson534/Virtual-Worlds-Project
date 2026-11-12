@@ -8,24 +8,30 @@ using System.Collections.Generic;
 
 public class Streets : MonoBehaviour
 {
-	public float thickness = 2;
+	public List<Cell> streetCells;
 	public Material streetMaterial;
+	public float thickness = 4f;
 	private CellHandler cellHandler;
 
+	public Streets(float thickness, Material streetMaterial)
+	{
+		this.thickness = thickness / 2;
+		this.streetMaterial = streetMaterial;
+	}
 
-    private void Start()
-    {
-		cellHandler = FindAnyObjectByType<CellHandler>();
-        buildStreets(cellHandler.cells, thickness);
-    }
 
 
-    private void buildStreets(List<Cell> cells, float thickness)
+
+    public List<Cell> buildStreets(List<Cell> cells)
 	{
 		int count = 0;
+
+		List<Cell> inCells = new List<Cell>(cells.Count);
+
 		foreach(Cell cell in cells)
 		{
 			Line[] boundaries = cell.boundaries;
+			Line[] inBoundaries = new Line[boundaries.Length];
 
 			for (int i = 0; i < boundaries.Length; i++)
 			{
@@ -37,6 +43,8 @@ public class Streets : MonoBehaviour
 				topVerticies[2] = getBetweenPoint(boundary, boundaries[(i + 1) % boundaries.Length], thickness);
 				topVerticies[3] = getBetweenPoint(boundaries[(boundaries.Length + (i - 1)) % boundaries.Length], boundary, thickness);
 
+				inBoundaries[i] = new Line(topVerticies[3], topVerticies[2]);
+
 				GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider));
 				
 				go.transform.localScale = new Vector3(1, 1, 1);
@@ -44,21 +52,23 @@ public class Streets : MonoBehaviour
 				go.GetComponent<MeshFilter>().mesh = mesh;
 				go.GetComponent<MeshRenderer>().material = streetMaterial;
 				go.GetComponent<MeshCollider>().sharedMesh = mesh;
-				go.name = "wall of center: " + count;
+				go.name = "wall of point: " + count;
             }
+
+			inCells.Add(new Cell(inBoundaries, cell.getPoint()));
 			count++;
 		}
-	}
 
+		return inCells;
+	}
 
     private Vector2 getBetweenPoint(Line a, Line b, float distance)
 	{
-		Vector2 mid = a.end;
-		Vector2 dir1 = (a.start - mid).normalized;
-		Vector2 dir2 = (b.end - mid).normalized;
-		Vector2 midDirection = (dir1 + dir2).normalized;
-		return mid + (midDirection * distance);
+		Vector2 midDirection = a.angleBisector(b);
+		return a.end + (midDirection * distance);
     }
+
+
 
 
 	private static Mesh getMesh(Vector2[] topVerticies)
@@ -89,7 +99,6 @@ public class Streets : MonoBehaviour
 
 	public static void materializeCells(List<Cell> cells) // visualization purposes. 
 	{
-
         Color[] colors = new UnityEngine.Color[3];
 		colors[0] = Color.red;
 		colors[1] = Color.green;
@@ -100,8 +109,8 @@ public class Streets : MonoBehaviour
 		{
 			GameObject structure = GameObject.CreatePrimitive(PrimitiveType.Cube);// make ovbious
 			structure.transform.localScale = new Vector3(2, 1, 2);
-			structure.transform.position = new Vector3(c.center.x, 1, c.center.y);
-			structure.name = "center" + count;
+			structure.transform.position = new Vector3(c.getPoint().x, 1, c.getPoint().y);
+			structure.name = "point" + count;
 
 			Color color = Random.ColorHSV();
 			Renderer objRenderer = structure.GetComponent<Renderer>();

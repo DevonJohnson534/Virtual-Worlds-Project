@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &490986360
+--- !u!1 &526020433
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,39 +127,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 490986362}
-  - component: {fileID: 490986361}
+  - component: {fileID: 526020435}
+  - component: {fileID: 526020434}
   m_Layer: 0
-  m_Name: Streets
+  m_Name: BuildingPlacement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &490986361
+--- !u!114 &526020434
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 490986360}
+  m_GameObject: {fileID: 526020433}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 999c6afb61b011f4c901897f67901da2, type: 3}
+  m_Script: {fileID: 11500000, guid: e27a1f7a2d7cf5b709704628952fe98f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Streets
-  thickness: 4
-  streetMaterial: {fileID: 2100000, guid: 9b02b10bd841a1e479af0751505639a9, type: 2}
---- !u!4 &490986362
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingPlacement
+  cellHandler: {fileID: 0}
+  streetHandler: {fileID: 0}
+--- !u!4 &526020435
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 490986360}
+  m_GameObject: {fileID: 526020433}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.40917, y: -0, z: -22.82664}
+  m_LocalPosition: {x: -158.66643, y: -0.09992, z: -221.78357}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -197,6 +197,8 @@ MonoBehaviour:
   boundDistance: 500
   numberOfCells: 50
   minDistance: 100
+  StreetThickness: 4
+  streetMaterial: {fileID: 0}
 --- !u!4 &853859050
 Transform:
   m_ObjectHideFlags: 0
@@ -522,7 +524,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1833036620}
-  - {fileID: 490986362}
   - {fileID: 853859050}
+  - {fileID: 526020435}
   - {fileID: 1158080952}
   - {fileID: 1499114017}
