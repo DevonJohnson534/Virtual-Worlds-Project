@@ -7,6 +7,8 @@ namespace Voronoi
         public Vector2 start;
         public Vector2 end;
 
+        public bool valid = true;
+
         private float length = -1;
         private Vector2 direction = Vector2.zero;
 
@@ -36,6 +38,26 @@ namespace Voronoi
             }
 
             return direction;
+        }
+
+
+        public void flip()
+        {
+            (start, end) = (end, start);
+            direction = Vector2.zero;
+        }
+
+
+        public void resize(float difference)
+        {
+            end = end + (getDirection() * difference);
+            length = -1;
+        }
+
+        public void resizeFromStart(float difference)
+        {
+            start = start + (getDirection() * difference);
+            length = -1;
         }
 
 
