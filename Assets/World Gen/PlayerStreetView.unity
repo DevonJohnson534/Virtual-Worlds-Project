@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CellHandler
   boundDistance: 200
   numberOfCells: 120
-  minDistance: 40
+  minDistance: 50
   StreetThickness: 5
   streetMaterial: {fileID: 2100000, guid: 9b02b10bd841a1e479af0751505639a9, type: 2}
   prefabs:

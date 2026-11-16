@@ -113,12 +113,12 @@ public class Streets
 	public static void materializeCell(Cell c, int count)
 	{
         GameObject point = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        point.transform.localScale = new Vector3(2, 1, 2);
+        point.transform.localScale = new Vector3(1, 1, 1);
         point.transform.position = new Vector3(c.getPoint().x, 1, c.getPoint().y);
         point.name = "point" + count;
 
         GameObject center = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        center.transform.localScale = new Vector3(2, 1, 2);
+        center.transform.localScale = new Vector3(1, 1, 1);
         center.transform.position = new Vector3(c.getCenter().x, 1, c.getCenter().y);
         center.name = "center" + count;
 
@@ -148,7 +148,7 @@ public class Streets
 
             Vector3 direction = end - start;
             cube.transform.position = start + (direction / 2f);
-            cube.transform.localScale = new Vector3(2, 2, direction.magnitude);
+            cube.transform.localScale = new Vector3(0.5f, 0.5f, direction.magnitude);
             cube.name = "boundary" + wallcount + "of cell " + count;
 
             if (direction != Vector3.zero)

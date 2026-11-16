@@ -1,6 +1,7 @@
 using BuildingGen;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using Voronoi;
 
@@ -10,15 +11,14 @@ public class CellHandler : MonoBehaviour
     public int numberOfCells;
     public float minDistance;
     public float StreetThickness = 4f;
-    public Material streetMaterial;
 
+    public Material streetMaterial;
     public GameObject[] prefabs;
 
-
+    public bool cellsReady = false;
     public List<Voronoi.Cell> cells;
     private List<Voronoi.Cell> streetCells;
-    private int currentCellIndex = 0;
-    private bool currentComplete = true;
+
     void Awake()
     {
         Vector2 outerBounds = new Vector2(boundDistance, boundDistance);
@@ -28,9 +28,17 @@ public class CellHandler : MonoBehaviour
 
         Streets streets = new Streets(StreetThickness, streetMaterial);
         streetCells = streets.buildStreets(cells);
-        populateCell(streetCells[1]);     //more is possible but optimization is needed.   
-        populateCell(streetCells[2]);        
-        populateCell(streetCells[3]);
+        cellsReady = true;
+    }
+
+
+    private void Start()
+    {
+        foreach(Voronoi.Cell c in streetCells)
+        {
+            populateCell(c);
+        }
+
     }
 
     private void populateCell(Voronoi.Cell c)
@@ -43,11 +51,11 @@ public class CellHandler : MonoBehaviour
 
         Vector3 origin = new Vector3(plot[0].start.x, 1, plot[0].start.y);
 
-        int x = Mathf.FloorToInt(plot[0].getLength());
+        int x = Mathf.FloorToInt((plot[0].getLength()-2) / 2);
         int y = Random.Range(10, 20);
-        int z = Mathf.FloorToInt(plot[1].getLength());
+        int z = Mathf.FloorToInt((plot[1].getLength()-2) / 2);
 
-        float rotationY = Mathf.Rad2Deg * Mathf.Atan2(plot[0].getDirection().x, plot[0].getDirection().y);
+        float rotationY = Mathf.Rad2Deg * Mathf.Atan2(plot[0].getDirection().x, plot[0].getDirection().y); // im a  chud
 
 
         Quaternion rotation = Quaternion.Euler(0f, rotationY, 0f);
