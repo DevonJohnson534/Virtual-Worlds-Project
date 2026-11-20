@@ -5,8 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/StreetViewDemo.unity
+    guid: d86511a8a785397ca8793cdfb44d7b01
+  - enabled: 1
+    path: Assets/Scenes/StalkerTest.unity
+    guid: b02f667147977664bb886731bc35c6fd
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 30fff551bad6f9743ac1de94eb1d1480
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 897309065854651706, guid: e28a15960b4cfcc4ebbd367af567bd7f, type: 3}
     - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: tilePrototypes.Array.size
-      value: 14
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: 'tilePrototypes.Array.data[0]'
@@ -102,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: -4426169921380367916, guid: 803959ec4ee38d047bb1dee5b1fab00a, type: 3}
     - target: {fileID: 4065848141441655881, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: m_Name
-      value: Stairs World
+      value: Stairs world 1
       objectReference: {fileID: 0}
     - target: {fileID: 8785336230644452318, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
       propertyPath: m_LocalPosition.x

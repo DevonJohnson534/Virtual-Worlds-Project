@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6380487524746895757
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: tileSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: tileSize.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: tileSize.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: dimensions.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: dimensions.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: dimensions.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: magicTilePrototype
+      value: 
+      objectReference: {fileID: 897309065854651706, guid: e28a15960b4cfcc4ebbd367af567bd7f, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: tilePrototypes.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[0]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: 7da6a617ff55dad439d9c0d5328294dd, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2293330809889163253, guid: 4183c1dfd69eb9241a3ea674c51f621e, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[2]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: 46545e908e371764ba02ba69d6294a95, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[3]'
+      value: 
+      objectReference: {fileID: -6778582060028963360, guid: b6d8d85de329afc4aa2e18268b896f9f, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[4]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: b05f4b84f685d154a969065cde16dfc2, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[5]'
+      value: 
+      objectReference: {fileID: -8039004255516008022, guid: e8ed15fd82c2e4f4991f944d0fa70a19, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[6]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: 0eabb8d4841d3294ba4bf530329e7356, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[7]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: b05f4b84f685d154a969065cde16dfc2, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[8]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: b05f4b84f685d154a969065cde16dfc2, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[9]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: b05f4b84f685d154a969065cde16dfc2, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[10]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: b05f4b84f685d154a969065cde16dfc2, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[11]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: 55386d067e996f54ba30977d511a96fe, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[12]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: 5db930ff707492344919b0cd934bfc62, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[13]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: df493ea9ef6717244948c1d5f728cfd7, type: 3}
+    - target: {fileID: 1767565473202286319, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: 'tilePrototypes.Array.data[14]'
+      value: 
+      objectReference: {fileID: -4426169921380367916, guid: 803959ec4ee38d047bb1dee5b1fab00a, type: 3}
+    - target: {fileID: 4065848141441655881, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: m_Name
+      value: Stairs world old
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785336230644452318, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785336230644452318, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 53dc179d373bd3849a178391f18f76d1, type: 3}
