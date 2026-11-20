@@ -11,8 +11,8 @@ namespace BuildingGen
 	{
 		public Boolean useBoundaries;
 
-		public Vector3Int dimensions;
-		public Vector3 tileSize;
+		public Vector3Int dimensions; //in tiles
+		public Vector3 tileSize; //the size of each tile in unity units
 		public TilePrototype[] tilePrototypes;
 
 		public TilePrototype magicTilePrototype;  //the magic tile can be next to anything b/c all -1 edges
@@ -78,7 +78,7 @@ namespace BuildingGen
 
 			//Create the magic tile and generate its neighbor rules. same for air and ground tiles
 			magicTile = SetupSpecialTile(magicTilePrototype, new Tile[0]);
-			airTile = SetupSpecialTile(airTilePrototype, new Tile[] {magicTile});
+			airTile = SetupSpecialTile(airTilePrototype, new Tile[] { magicTile });
 			//groundTile = SetupSpecialTile(groundTilePrototype, new Tile[] { magicTile, airTile});
 		}
 		private Tile SetupSpecialTile(TilePrototype proto, Tile[] otherSpecials)
@@ -197,6 +197,14 @@ namespace BuildingGen
 
 			return currentCords;
 		}
+		private Vector3 getInsideDimensions()
+		{
+			//Dimensions for just the building, minus any border edges
+			if (useBoundaries)
+				return dimensions - new Vector3(2, 0, 2);
+			else return dimensions;
+		}
+
 		private Vector3Int CollapseCell(List<Vector3Int> candidates)
 		{
 			//Collapses a random candiate cell to to a single tile and instantiates that tile.
@@ -210,7 +218,17 @@ namespace BuildingGen
 			collapsingCell.possibleTiles = new List<Tile> { collapsedTile };
 
 			TilePrototype instantiated = Instantiate(collapsedTile.prototype, this.transform); //instantiated tiles are children of this building
-			instantiated.transform.localPosition = new Vector3(cords.x * tileSize.x, cords.y * tileSize.y, cords.z * tileSize.z); //TODO -1,-1,-1?
+
+			Vector3 boundaryOffset;
+			if (useBoundaries)
+				boundaryOffset = new Vector3(1, 0, 1);
+			else
+				boundaryOffset = Vector3.zero;
+
+			Vector3 insideDims = getInsideDimensions();
+			Vector3 center = new Vector3((insideDims.x - 1) / 2f, 0, (insideDims.z - 1) / 2f);
+
+			instantiated.transform.localPosition = Vector3.Scale(cords - boundaryOffset - center, tileSize);
 			instantiated.transform.localRotation = collapsedTile.getRotation();
 
 			return cords;
