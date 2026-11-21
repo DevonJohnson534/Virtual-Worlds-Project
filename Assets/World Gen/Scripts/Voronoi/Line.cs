@@ -142,6 +142,17 @@ namespace Voronoi
             return (start == other.start && end == other.end) || (start == other.end && end == other.start);
         }
 
+        public Line flipOtherAsReference(Line b) //returns b in order with this Line 
+        {
+            if (end == b.start)
+            {
+                return b;
+            }
+
+            return new Line(b.end, b.start);
+        }
+
+
         public string toString()
         {
             return start.ToString() + " " + end.ToString();

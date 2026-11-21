@@ -34,7 +34,7 @@ public class CellHandler : MonoBehaviour
 
     private void Start()
     {
-        int limit = (int) Mathf.Min(streetCells.Count, 1);
+        int limit = (int) Mathf.Min(streetCells.Count, 10);
 
         for(int i = 0; i < limit; i++)
         {
@@ -52,7 +52,7 @@ public class CellHandler : MonoBehaviour
         {
             
             Streets.materializeCell(plot, -1);
-            /*
+            
             Vector3 origin = new Vector3(plot.getCenter().x, 1, plot.getCenter().y);
 
             int x = Mathf.FloorToInt((plot.boundaries[0].getLength() - 2) / 2);
@@ -66,7 +66,7 @@ public class CellHandler : MonoBehaviour
 
             GameObject instantiated = Instantiate(prefabs[(int)Random.Range(0, prefabs.Length)], origin, rotation);
             Vector3Int dimensions = new Vector3Int(x, y, z);
-            instantiated.GetComponent<BuildingGenerator>().StartGeneration(dimensions);*/
+            instantiated.GetComponent<BuildingGenerator>().StartGeneration(dimensions);
         }
     }
 }

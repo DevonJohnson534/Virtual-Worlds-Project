@@ -8,23 +8,42 @@ public class CellBuildings
     public static List<Cell> getConstructionZones(Cell c)
     {
         List<Cell> rectangles = new List<Cell>();
-        Debug.Log(c.longestBorderLength());
         Cell first = constructionZone(c, c.longestBorderIndex());
         rectangles.Add(first);
-        Debug.Log(first.toString());
 
-        rectangles.Add(branchPlotting(c, first, 1));
-        //rectangles.Add(branchPlotting(c, first, 2));
-        //rectangles.Add(branchPlotting(c, first, 3));
+        if (validSize(first))
+        {
+            List<Cell> candidates = new List<Cell>();
+            candidates.Add(branchPlotting(c, first, 1, rectangles));
+            candidates.Add(branchPlotting(c, first, 2, rectangles));
+            candidates.Add(branchPlotting(c, first, 3, rectangles));
+
+            foreach(Cell s in candidates)
+            {
+                if(c != null || validSize(c))
+                {
+                    rectangles.Add(s);
+                }
+            }
+
+        }
+
 
         return rectangles;
     }
 
 
 
-    private static Cell branchPlotting(Cell superCell, Cell branchedFrom, int borderIndex)
+    private static Cell branchPlotting(Cell superCell, Cell branchedFrom, int borderIndex, List<Cell> all)
     {
         Line knownBorder = new Line(branchedFrom.boundaries[borderIndex]);
+
+        if(knownBorder.getLength() <= 2)
+        {
+            return null;
+        }
+
+
         Vector2 dir = knownBorder.getDirection();
         float safeLen = superCell.longestBorderLength();
 
@@ -49,21 +68,18 @@ public class CellBuildings
             }
         }
 
-
-
         Line crossingLine = new Line(intersect1.Value, intersect2.Value);
         Debug.Log("split: " + crossingLine.toString());
 
         Cell subCell = superCell.splitCell(crossingLine, true);
 
-        if (subCell.inCell(branchedFrom.getCenter()))
+        if (branchedFrom.inCell(subCell.getCenter()))
         {
+
             subCell = superCell.splitCell(crossingLine, false);
         }
 
-        Debug.Log(subCell.toString());
-
-        Streets.materializeCell(subCell, -1);
+        //Streets.materializeCell(subCell, -1);
 
         int indexForBranch = 0;
         for(int i = 0; i < subCell.boundaries.Length; i++)
@@ -73,11 +89,16 @@ public class CellBuildings
                 indexForBranch = i;
             }
         }
+
         return constructionZone(subCell, indexForBranch);
-
-
     }
 
+
+    public static bool validSize(Cell cell)
+    {
+        Line[] boundaries = cell.boundaries;
+        return (boundaries[0].getLength() > 2 && boundaries[1].getLength() > 2);
+    }
 
 
     public static Cell constructionZone(Cell cell, int knownLineIndex)

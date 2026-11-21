@@ -114,9 +114,8 @@ namespace Voronoi
             return corners;
         }
 
-        public Cell splitCell(Line divider, bool clockwise)//divider is a line who's end points are each on a different edge of the cell;
+        public Cell splitCell(Line divider, bool right)//divider is a line who's end points are each on a different edge of the cell;
         {
-            Vector2[] corners = asCorners();
             Vector2 corner1 = divider.start;
             Vector2 corner2 = divider.end;
 
@@ -136,29 +135,33 @@ namespace Voronoi
                 }
             }
 
-            int startIndex = clockwise ? index1 : index2;
-            int endIndex = clockwise ? index2 : index1;
-            Debug.Log(startIndex);
-            Debug.Log(endIndex);
-            Vector2[] newCorners = new Vector2[boundaries.Length];
 
-            for (int i = startIndex; i < startIndex + boundaries.Length; i ++)
+
+            List<Line> newCell = new List<Line>();
+            if (right)
             {
-                int index = i % boundaries.Length;
-
-                newCorners[i - startIndex] = corners[index];
-
-                if (index == index1)
-                {
-                    newCorners[i - startIndex] = corner1;
-                }
-                else if (index == index2)
-                {
-                    newCorners[i - startIndex] = corner2;
-                }
+                newCell.Add(new Line(boundaries[index2].start, divider.end));
+                newCell.Add(newCell[newCell.Count - 1].flipOtherAsReference(divider));
+                newCell.Add(new Line(divider.start, boundaries[index1].end));
+            }
+            else
+            {
+                newCell.Add(new Line(boundaries[index1].start, divider.start));
+                newCell.Add(newCell[newCell.Count - 1].flipOtherAsReference(divider));
+                newCell.Add(new Line(divider.end, boundaries[index2].end));
             }
 
-            return new Cell(newCorners);
+            int startIndex = right ? index1 : index2;
+            int endIndex = right ? index2 : index1;
+
+            startIndex = (startIndex + 1) % boundaries.Length;
+
+            for (int i = startIndex; i % boundaries.Length != endIndex; i++)
+            {
+                newCell.Add(boundaries[i % boundaries.Length]);
+            }
+
+            return new Cell(newCell.ToArray());
         }
 
 
