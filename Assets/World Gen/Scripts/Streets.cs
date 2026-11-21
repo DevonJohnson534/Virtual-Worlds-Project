@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
+using UnityEditor;
 using UnityEngine;
 using Voronoi;
-using System.Collections.Generic;
 
 
 public class Streets
@@ -23,8 +24,9 @@ public class Streets
 		int count = 0;
 
 		List<Cell> inCells = new List<Cell>(cells.Count);
+        GameObject parent = new GameObject("AllStreets");
 
-		foreach(Cell cell in cells)
+        foreach (Cell cell in cells)
 		{
 			Line[] boundaries = cell.boundaries;
 			Line[] inBoundaries = new Line[boundaries.Length];
@@ -48,10 +50,12 @@ public class Streets
 				go.GetComponent<MeshFilter>().mesh = mesh;
 				go.GetComponent<MeshRenderer>().material = streetMaterial;
 				go.GetComponent<MeshCollider>().sharedMesh = mesh;
-				go.name = "wall of point: " + count;
+				go.transform.parent = parent.transform;
+
+                go.name = "street of point: " + count;
             }
 
-			inCells.Add(new Cell(inBoundaries, cell.getPoint()));
+			inCells.Add(new Cell(inBoundaries));
 			count++;
 		}
 
@@ -95,54 +99,75 @@ public class Streets
 
 	public static void materializeCells(List<Cell> cells) // visualization purposes. 
 	{
-        Color[] colors = new UnityEngine.Color[3];
-		colors[0] = Color.red;
-		colors[1] = Color.green;
-		colors[2] = Color.blue;
 		int count = 0;
 
 		foreach (Cell c in cells)
 		{
-			GameObject structure = GameObject.CreatePrimitive(PrimitiveType.Cube);// make ovbious
-			structure.transform.localScale = new Vector3(2, 1, 2);
-			structure.transform.position = new Vector3(c.getPoint().x, 1, c.getPoint().y);
-			structure.name = "point" + count;
-
-			Color color = Random.ColorHSV();
-			Renderer objRenderer = structure.GetComponent<Renderer>();
-
-			if (objRenderer != null)
-			{
-				objRenderer.material.color = color;
-
-			}
-			int wallcount = 0;
-
-			foreach (Line l in c.boundaries)
-			{
-				GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-				Vector3 start = new Vector3(l.start.x, 3, l.start.y);
-				Vector3 end = new Vector3(l.end.x, 3, l.end.y);
-
-				Vector3 direction = end - start;
-				cube.transform.position = start + (direction / 2f);
-				cube.transform.localScale = new Vector3(2, 2, direction.magnitude);
-				cube.name = "wall" + wallcount + "of cell " + count;
-
-				if (direction != Vector3.zero)
-				{
-					cube.transform.rotation = Quaternion.LookRotation(direction);
-				}
-				Renderer o = cube.GetComponent<Renderer>();
-
-				if (o != null)
-				{
-					o.material.color = color;
-
-				}
-				wallcount++;
-			}
+			materializeCell(c, count);
 			count++;
 		}
 	}
+
+
+
+	public static void materializeCell(Cell c, int count)
+	{
+        Color color = Random.ColorHSV();
+
+        if (c.getPoint().HasValue)
+        {
+            GameObject point = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            point.transform.localScale = new Vector3(1, 1, 1);
+            point.transform.position = new Vector3(c.getPoint().Value.x, 1, c.getPoint().Value.y);
+            point.name = "point" + count;
+            Renderer objRendererp = point.GetComponent<Renderer>();
+            if (objRendererp != null)
+            {
+                objRendererp.material.color = color;
+
+            }
+        }
+
+        GameObject center = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        center.transform.localScale = new Vector3(1, 1, 1);
+        center.transform.position = new Vector3(c.getCenter().x, 1, c.getCenter().y);
+        center.name = "center" + count;
+
+
+        Renderer objRendererc = center.GetComponent<Renderer>();
+
+
+
+        if (objRendererc != null)
+        {
+            objRendererc.material.color = color;
+
+        }
+        int wallcount = 0;
+
+        foreach (Line l in c.boundaries)
+        {
+            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Vector3 start = new Vector3(l.start.x, 3, l.start.y);
+            Vector3 end = new Vector3(l.end.x, 3, l.end.y);
+
+            Vector3 direction = end - start;
+            cube.transform.position = start + (direction / 2f);
+            cube.transform.localScale = new Vector3(0.5f, 0.5f, direction.magnitude);
+            cube.name = "boundary" + wallcount + "of cell " + count;
+
+            if (direction != Vector3.zero)
+            {
+                cube.transform.rotation = Quaternion.LookRotation(direction);
+            }
+            Renderer o = cube.GetComponent<Renderer>();
+
+            if (o != null)
+            {
+                o.material.color = color;
+
+            }
+            wallcount++;
+        }
+    }
  }
