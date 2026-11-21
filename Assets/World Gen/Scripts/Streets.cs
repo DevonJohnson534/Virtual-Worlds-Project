@@ -55,7 +55,7 @@ public class Streets
                 go.name = "street of point: " + count;
             }
 
-			inCells.Add(new Cell(inBoundaries, cell.getPoint()));
+			inCells.Add(new Cell(inBoundaries));
 			count++;
 		}
 
@@ -112,10 +112,21 @@ public class Streets
 
 	public static void materializeCell(Cell c, int count)
 	{
-        GameObject point = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        point.transform.localScale = new Vector3(1, 1, 1);
-        point.transform.position = new Vector3(c.getPoint().x, 1, c.getPoint().y);
-        point.name = "point" + count;
+        Color color = Random.ColorHSV();
+
+        if (c.getPoint().HasValue)
+        {
+            GameObject point = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            point.transform.localScale = new Vector3(1, 1, 1);
+            point.transform.position = new Vector3(c.getPoint().Value.x, 1, c.getPoint().Value.y);
+            point.name = "point" + count;
+            Renderer objRendererp = point.GetComponent<Renderer>();
+            if (objRendererp != null)
+            {
+                objRendererp.material.color = color;
+
+            }
+        }
 
         GameObject center = GameObject.CreatePrimitive(PrimitiveType.Cube);
         center.transform.localScale = new Vector3(1, 1, 1);
@@ -123,15 +134,9 @@ public class Streets
         center.name = "center" + count;
 
 
-        Color color = Random.ColorHSV();
-        Renderer objRendererp = point.GetComponent<Renderer>();
         Renderer objRendererc = center.GetComponent<Renderer>();
 
-        if (objRendererp != null)
-        {
-            objRendererp.material.color = color;
 
-        }
 
         if (objRendererc != null)
         {

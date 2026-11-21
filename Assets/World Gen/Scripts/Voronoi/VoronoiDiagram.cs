@@ -52,8 +52,8 @@ namespace Voronoi
                     for (int i = 0; i < cell.boundaries.Length; i++)
                     {
                         Line cellBoundary = cell.boundaries[i];
-                        Vector2? firstIntersection = bisector.intersection(cellBoundary);
-                        Vector2? secondIntersection = bisector.intersection(cellBoundary);
+                        Vector2? firstIntersection = bisector.intersection(cellBoundary, true);
+                        Vector2? secondIntersection = bisector.intersection(cellBoundary, true);
 
                         if (firstIntersection.HasValue)
                         {
@@ -78,7 +78,7 @@ namespace Voronoi
                         int split2 = intersectedIndicies[1];
                         Cell subCell = new Cell(splitCell(newSegment, cell, split1, split2, true));
 
-                        if (inCell(currentPoint, subCell))
+                        if (subCell.inCell(currentPoint))
                         {
                             cell.boundaries = subCell.boundaries;
                         }
@@ -94,39 +94,6 @@ namespace Voronoi
             return cells;
         }
 
-
-
-        private bool inCell(Vector2 point, Cell cell)
-        {
-
-            Vector2 mid = (cell.boundaries[0].start + cell.boundaries[0].end) / 2;
-            Vector2 direction = point - mid;
-            Vector2 farEnd = point + limit * direction;
-
-            Line ray = new Line(point, farEnd);
-
-            int crosses = 0;
-
-            for (int i = 0; i < cell.boundaries.Length; i++)
-            {
-                if (cell.boundaries[i].onLine(point))
-                {
-                    return true;
-                }
-
-                if (ray.intersection(cell.boundaries[i]).HasValue)
-                {
-                    crosses += 1;
-                    if (crosses > 1)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return crosses == 1;
-
-        }
 
 
         private Line[] splitCell(Line bisection, Cell cell, int split1, int split2, bool rightSplit)

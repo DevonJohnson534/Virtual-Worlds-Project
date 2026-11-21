@@ -5,17 +5,87 @@ using UnityEngine.UIElements;
 using Voronoi;
 public class CellBuildings
 {
+    public static List<Cell> getConstructionZones(Cell c)
+    {
+        List<Cell> rectangles = new List<Cell>();
+        Debug.Log(c.longestBorderLength());
+        Cell first = constructionZone(c, c.longestBorderIndex());
+        rectangles.Add(first);
+        Debug.Log(first.toString());
+
+        rectangles.Add(branchPlotting(c, first, 1));
+        //rectangles.Add(branchPlotting(c, first, 2));
+        //rectangles.Add(branchPlotting(c, first, 3));
+
+        return rectangles;
+    }
 
 
 
+    private static Cell branchPlotting(Cell superCell, Cell branchedFrom, int borderIndex)
+    {
+        Line knownBorder = new Line(branchedFrom.boundaries[borderIndex]);
+        Vector2 dir = knownBorder.getDirection();
+        float safeLen = superCell.longestBorderLength();
 
-    public static Line[] constructionZone(Cell cell)
+        Line backwards = new Line(knownBorder.midpoint(), (knownBorder.start + (safeLen * -dir)));
+        Line forwards = new Line(knownBorder.midpoint(), (knownBorder.end + (safeLen * dir)));
+
+        Vector2? intersect1 = null;
+        Vector2? intersect2 = null;
+
+        foreach(Line l in superCell.boundaries)
+        {
+            Vector2? ibackward = backwards.intersection(l, true);
+            Vector2? iforward = forwards.intersection(l, true);
+
+            if (ibackward.HasValue)
+            {
+                intersect1 = ibackward.Value;
+            }
+            else if (iforward.HasValue)
+            {
+                intersect2 = iforward.Value;
+            }
+        }
+
+
+
+        Line crossingLine = new Line(intersect1.Value, intersect2.Value);
+        Debug.Log("split: " + crossingLine.toString());
+
+        Cell subCell = superCell.splitCell(crossingLine, true);
+
+        if (subCell.inCell(branchedFrom.getCenter()))
+        {
+            subCell = superCell.splitCell(crossingLine, false);
+        }
+
+        Debug.Log(subCell.toString());
+
+        Streets.materializeCell(subCell, -1);
+
+        int indexForBranch = 0;
+        for(int i = 0; i < subCell.boundaries.Length; i++)
+        {
+            if (subCell.boundaries[i].equals(crossingLine))
+            {
+                indexForBranch = i;
+            }
+        }
+        return constructionZone(subCell, indexForBranch);
+
+
+    }
+
+
+
+    public static Cell constructionZone(Cell cell, int knownLineIndex)
     {
         Line[] boundaries = cell.boundaries;
-        int longIndex = cell.longestBorder();
-        Line longest = boundaries[longIndex];
+        Line known = new Line(boundaries[knownLineIndex]);
 
-        Line[] adjacentEdges = newEdges(longest, longIndex, boundaries, true, true);
+        Line[] adjacentEdges = newEdges(known, knownLineIndex, boundaries, true, true);
 
         Line last = adjacentEdges[0];
         Line next = adjacentEdges[1];
@@ -25,26 +95,27 @@ public class CellBuildings
 
         if (!last.valid)
         {
-            longest.resizeFromStart(longest.getLength() / 3);
+            known.resizeFromStart(known.getLength() / 4);
             skipLastCheck = false;
         }
 
         if (!next.valid)
         {
-            longest.resize(longest.getLength() / -3);
+            known.resize(known.getLength() / -4);
             skipNextCheck = false;
         }
 
-        adjacentEdges = newEdges(longest, longIndex, boundaries, skipLastCheck, skipNextCheck);
-
+        adjacentEdges = newEdges(known, knownLineIndex, boundaries, skipLastCheck, skipNextCheck);
         last = adjacentEdges[0];
         next = adjacentEdges[1];
+
 
         minimize(last, next);
 
         Line missing = new Line(next.end, last.end);
         Line flipped = new Line(last.end, last.start);
-        return new Line[] { longest, next, missing, flipped };
+        Line[] lines = new Line[] { known, next, missing, flipped };
+        return new Cell(lines);
 
     }
 
@@ -83,23 +154,25 @@ public class CellBuildings
         bool foundNext = false;
 
         int startIndex = skipNext ? knownIndex + 2 : knownIndex + 1;
-        int endIndex = skipLast ? boundaries.Length + knownIndex - 1 : boundaries.Length + knownIndex;
+        int endIndex = skipLast ? (boundaries.Length + knownIndex - 1): boundaries.Length + knownIndex;
 
         for (int i = startIndex; i < endIndex; i++)
         {
             int index = i % boundaries.Length;
 
-            Vector2? intersectCheckLast = lastEdge.intersection(boundaries[index]);
-            Vector2? intersectCheckNext= nextEdge.intersection(boundaries[index]);
+            Vector2? intersectCheckLast = lastEdge.intersection(boundaries[index], true);
+            Vector2? intersectCheckNext = nextEdge.intersection(boundaries[index], true);
 
             if (!foundLast && intersectCheckLast.HasValue)
             {
                 lastEdge.end = intersectCheckLast.Value;
+                foundLast = true;
             }
 
             if (!foundNext && intersectCheckNext.HasValue)
             {
                 nextEdge.end = intersectCheckNext.Value;
+                foundNext = true;
             }
         }
 
