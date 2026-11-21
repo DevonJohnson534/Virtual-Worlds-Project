@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Voronoi
@@ -7,6 +8,8 @@ namespace Voronoi
         public Vector2 start;
         public Vector2 end;
 
+        public bool valid = true;
+
         private float length = -1;
         private Vector2 direction = Vector2.zero;
 
@@ -14,6 +17,11 @@ namespace Voronoi
         {
             start = p1;
             end = p2;
+        }
+        public Line(Line copy)
+        {
+            this.start = copy.start;
+            this.end = copy.end;
         }
 
 
@@ -39,6 +47,26 @@ namespace Voronoi
         }
 
 
+        public void flip()
+        {
+            (start, end) = (end, start);
+            direction = Vector2.zero;
+        }
+
+
+        public void resize(float difference)
+        {
+            end = end + (getDirection() * difference);
+            length = -1;
+        }
+
+        public void resizeFromStart(float difference)
+        {
+            start = start + (getDirection() * difference);
+            length = -1;
+        }
+
+
         public Vector2 angleBisector(Line nextLine) // "next line" meaning this.end = nextLine.start
         {
             Vector2 vertex = end;
@@ -50,7 +78,7 @@ namespace Voronoi
         }
 
 
-        public Vector2? intersection(Line other)
+        public Vector2? intersection(Line other, bool segment)
         {
             float a1 = start.y - end.y;
             float b1 = end.x - start.x;
@@ -71,7 +99,7 @@ namespace Voronoi
             float y = (a1 * c2 - a2 * c1) / det;
             Vector2 intersection = new Vector2(x, y);
 
-            bool isInBounds = this.inBounds(intersection) && other.inBounds(intersection);
+            bool isInBounds = !segment || this.inBounds(intersection) && other.inBounds(intersection);
 
             if (isInBounds)
             {
@@ -99,12 +127,35 @@ namespace Voronoi
             float b1 = end.x - start.x;
             float c1 = a1 * start.x + b1 * start.y;
 
-            if (Mathf.Abs(Mathf.Abs(c1) - Mathf.Abs(a1 * point.x + b1 * point.y)) <= 0.001)
+            return (Mathf.Abs(Mathf.Abs(c1) - Mathf.Abs(a1 * point.x + b1 * point.y)) <= 0.001);
+        }
+
+
+        public Vector2 midpoint()
+        {
+            return (start + end) / 2;
+        }
+
+
+        public bool equals(Line other)
+        {
+            return (start == other.start && end == other.end) || (start == other.end && end == other.start);
+        }
+
+        public Line flipOtherAsReference(Line b) //returns b in order with this Line 
+        {
+            if (end == b.start)
             {
-                return true;
+                return b;
             }
 
-            return false;
+            return new Line(b.end, b.start);
+        }
+
+
+        public string toString()
+        {
+            return start.ToString() + " " + end.ToString();
         }
 
     }
