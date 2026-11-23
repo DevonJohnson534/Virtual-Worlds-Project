@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5287544395761903591, guid: 59caea83ab6d50344a107d4feb0a61d9, type: 3}
       propertyPath: m_Name
-      value: Character 1
+      value: Char W Death
       objectReference: {fileID: 0}
     - target: {fileID: 5287544395761903591, guid: 59caea83ab6d50344a107d4feb0a61d9, type: 3}
       propertyPath: m_Layer
@@ -136,8 +136,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 769b4cb8bace6474b95fab7afa7263b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatHandler
-  hurtSound: {fileID: 8300000, guid: 05fd4656ac193b149bbf5bf6bdeb6f99, type: 3}
-  deathSound: {fileID: 8300000, guid: 37f627eee3752df4986f099dc4f8e08f, type: 3}
+  hurtSounds:
+  - {fileID: 8300000, guid: 2efa4bf48d395594da2b0419add5760e, type: 3}
+  - {fileID: 8300000, guid: 5770dcd4a1cb57d458e61e73cb12fbac, type: 3}
+  - {fileID: 8300000, guid: 368b7516ea9c30e4e9246371720a907d, type: 3}
+  - {fileID: 8300000, guid: 13c822d5fa4218946ba834d7c9715edd, type: 3}
+  deathSound: {fileID: 8300000, guid: 13c822d5fa4218946ba834d7c9715edd, type: 3}
   playerHUD: {fileID: 3366621049548362595}
   health: {fileID: 2282215480658570209}
 --- !u!114 &2282215480658570209
