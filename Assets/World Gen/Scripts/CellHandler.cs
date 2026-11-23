@@ -27,6 +27,7 @@ public class CellHandler : MonoBehaviour
         cells = voronoi.getCells(Points);
 
         Streets streets = new Streets(StreetThickness, streetMaterial);
+        streets.fillCell(voronoi.bigSquare());
         streetCells = streets.buildStreets(cells);
         cellsReady = true;
     }
@@ -50,9 +51,7 @@ public class CellHandler : MonoBehaviour
 
         foreach (Voronoi.Cell plot in plots)
         {
-            
-            Streets.materializeCell(plot, -1);
-            
+                       
             Vector3 origin = new Vector3(plot.getCenter().x, 1, plot.getCenter().y);
 
             int x = Mathf.FloorToInt((plot.boundaries[0].getLength() - 2) / 2);

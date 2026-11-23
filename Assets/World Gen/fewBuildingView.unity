@@ -241,7 +241,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 13
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.5891753, g: 0.5747152, b: 0.5943396, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -344,9 +344,9 @@ MonoBehaviour:
   numberOfCells: 5
   minDistance: 20
   StreetThickness: 6
-  streetMaterial: {fileID: 2100000, guid: 9b02b10bd841a1e479af0751505639a9, type: 2}
+  streetMaterial: {fileID: 2100000, guid: d57c97cd95636a44e8dcfd5acb607888, type: 2}
   prefabs:
-  - {fileID: 6980791417498387908, guid: 85ef38fe621dafb41b9494f2cf3167ba, type: 3}
+  - {fileID: 6980791417498387908, guid: 7b189c22d13dbff4bad7cfcd87d907b4, type: 3}
   - {fileID: 5132662550869475955, guid: 7a39d4c4500a7064aaaeafe707446d04, type: 3}
   - {fileID: 6980791417498387908, guid: 7ce85c26b25c69843b9febd847a42fd5, type: 3}
   cellsReady: 0

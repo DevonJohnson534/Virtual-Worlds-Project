@@ -6,13 +6,14 @@ namespace Voronoi
 {
     public class VoronoiDiagram
     {
-        float limit;
+        public float limit;
 
         public VoronoiDiagram(float limit)
         {
             this.limit = limit;
         }
-        public List<Cell> getCells(List<Vector2> points)
+
+        public Cell bigSquare()
         {
             Vector2[] corners = new Vector2[4]; // big square
 
@@ -21,7 +22,14 @@ namespace Voronoi
             corners[2] = new Vector2(limit, limit);
             corners[3] = new Vector2(limit, -limit);
 
-            Cell limits = new Cell(corners, points[0]);
+            return new Cell(corners);
+        }
+
+        public List<Cell> getCells(List<Vector2> points)
+        {
+
+            Cell limits = bigSquare();
+            limits.setPoint(points[0]);
 
             List<Cell> cells = new List<Cell>(points.Count);
 

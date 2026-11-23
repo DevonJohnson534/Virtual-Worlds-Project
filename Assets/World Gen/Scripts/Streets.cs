@@ -19,6 +19,18 @@ public class Streets
 		this.streetMaterial = streetMaterial;
 	}
 
+    public void fillCell(Cell c)
+    {
+        Mesh mesh = getMesh(c.asCorners());
+        GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider));
+
+        go.transform.localScale = new Vector3(1, 1, 1);
+        go.GetComponent<MeshFilter>().mesh = mesh;
+        go.GetComponent<MeshRenderer>().material = streetMaterial;
+        go.GetComponent<MeshCollider>().sharedMesh = mesh;
+    }
+
+
     public List<Cell> buildStreets(List<Cell> cells)
 	{
 		int count = 0;
@@ -43,7 +55,7 @@ public class Streets
 
 				inBoundaries[i] = new Line(topVerticies[3], topVerticies[2]);
 
-				GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider));
+				/*GameObject go = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider));
 				
 				go.transform.localScale = new Vector3(1, 1, 1);
 				Mesh mesh = getMesh(topVerticies);
@@ -53,6 +65,8 @@ public class Streets
 				go.transform.parent = parent.transform;
 
                 go.name = "street of point: " + count;
+                */
+                
             }
 
 			inCells.Add(new Cell(inBoundaries));

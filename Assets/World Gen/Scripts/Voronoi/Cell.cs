@@ -135,8 +135,6 @@ namespace Voronoi
                 }
             }
 
-
-
             List<Line> newCell = new List<Line>();
             if (right)
             {
